@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType } from 'react'
 
-import s from './button.module.scss'
+import s from './card.module.scss'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
@@ -9,7 +9,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   className?: string
 } & ComponentPropsWithoutRef<T>
 
-export const Button = <T extends ElementType = 'button'>(
+export const Card = <T extends ElementType = 'button'>(
   props: ButtonProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>
 ) => {
   const { variant = 'primary', fullWidth, className, as: Component = 'button', ...rest } = props
