@@ -20,7 +20,41 @@ type Story = StoryObj<typeof meta>
 export const PrimaryInput: Story = {
   args: {
     type: 'text',
-    name: 'Input',
+    label: 'Input',
+    placeholder: 'input',
+    disabled: false,
+  },
+}
+export const SearchInput: Story = {
+  args: {
+    type: 'search',
+    label: 'Input',
+    placeholder: 'input',
+    disabled: false,
+  },
+}
+export const DisabledInput: Story = {
+  args: {
+    type: 'text',
+    label: 'Input',
+    placeholder: 'input',
+    disabled: true,
+  },
+}
+export const ErrorInput: Story = {
+  args: {
+    type: 'text',
+    errorMessage: 'Error',
+    label: 'Input',
+    placeholder: 'input',
+    disabled: false,
+  },
+}
+export const PasswordInput: Story = {
+  args: {
+    type: 'password',
+    label: 'Input',
+    placeholder: 'input',
     disabled: false,
   },
 }
