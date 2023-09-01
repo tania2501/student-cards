@@ -1,20 +1,9 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 import s from './card.module.scss'
 
-export type ButtonProps<T extends ElementType = 'button'> = {
-  as?: T
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'link'
-  fullWidth?: boolean
-  className?: string
-} & ComponentPropsWithoutRef<T>
+export type CardProps = {} & ComponentPropsWithoutRef<'div'>
 
-export const Card = <T extends ElementType = 'button'>(
-  props: ButtonProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>
-) => {
-  const { variant = 'primary', fullWidth, className, as: Component = 'button', ...rest } = props
-
-  return (
-    <Component className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`} {...rest} />
-  )
+export const Card = (props: CardProps) => {
+  return <div className={s.main} {...props}></div>
 }

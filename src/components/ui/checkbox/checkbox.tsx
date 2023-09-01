@@ -4,12 +4,18 @@ import { CheckboxIcon, UncheckedIcon } from '../../../assets/icons/checkbox'
 
 import s from './checkbox.module.scss'
 
-export type CheckBoxProps = {
+export type CheckboxProps = {
+  className?: string
   checked?: boolean
   onChange?: (checked: boolean) => void
+  disabled?: boolean
+  required?: boolean
+  label?: string
+  id?: string
+  position?: 'left'
 }
 
-export const CheckBox = (props: CheckBoxProps) => {
+export const CheckBox = (props: CheckboxProps) => {
   const { checked, onChange } = props
 
   return (
