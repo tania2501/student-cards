@@ -1,4 +1,5 @@
 import { LoginForm } from './components/auth/login-form/login-form'
+import { Header } from './components/header'
 import { CheckBox } from './components/ui/checkbox'
 import { Input } from './components/ui/input'
 
@@ -10,6 +11,7 @@ export function App() {
       <div style={{ width: '400px' }}>
         <LoginForm />
       </div>
+      <Header />
     </div>
   )
 }
