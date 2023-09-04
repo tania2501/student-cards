@@ -1,5 +1,6 @@
 import { LoginForm } from './components/auth/login-form/login-form'
 import { Header } from './components/header'
+import { Pagination } from './components/pagination'
 import { MainSlider } from './components/slider'
 import { CheckBox } from './components/ui/checkbox'
 import { Input } from './components/ui/input'
@@ -14,6 +15,7 @@ export function App() {
       </div>
       <Header />
       <MainSlider value={[2, 10]} step={1} max={15} />
+      <Pagination contentPerPage={1} count={12} />
     </div>
   )
 }

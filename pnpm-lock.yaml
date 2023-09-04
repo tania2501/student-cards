@@ -35,6 +35,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.15.0
     version: 6.15.0(react-dom@18.2.0)(react@18.2.0)
+  react-use-pagination:
+    specifier: ^2.0.1
+    version: 2.0.1(react@18.2.0)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -8376,6 +8379,14 @@ packages:
       react: 18.2.0
       tslib: 2.6.2
     dev: true
+
+  /react-use-pagination@2.0.1(react@18.2.0):
+    resolution: {integrity: sha512-bo7vI2oZ/+PJJozN7DLWPkewrULLoHb8a6WO3dGudJfEKnj8BVZVbJPkvn5jtydhJ5xi0t0W7xI06XlWUe8Jbw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
