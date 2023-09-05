@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
-import { UsePaginationProps, useCardsPagination } from '../../hooks/usePagination'
-import { Typography } from '../ui/typography'
+import { UsePaginationProps, useCardsPagination } from '../../../hooks/usePagination'
+import { Typography } from '../typography'
 
 import s from './pagination.module.scss'
 

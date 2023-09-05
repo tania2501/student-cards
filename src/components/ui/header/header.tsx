@@ -1,5 +1,5 @@
-import { SvgLogo } from '../../assets/icons/logo'
-import { Button } from '../ui/button'
+import { SvgLogo } from '../../../assets/icons/logo'
+import { Button } from '../button'
 
 import s from './header.module.scss'
 
