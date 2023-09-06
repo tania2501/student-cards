@@ -33,7 +33,7 @@ export const MainSelect = (props: SelectPropsType) => {
           {props.value.map((el, i) => {
             return (
               <SelectItem key={i} value={el}>
-                {el}
+                <Typography variant="body2">{el}</Typography>
               </SelectItem>
             )
           })}
