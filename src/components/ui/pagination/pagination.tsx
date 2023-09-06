@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 
 import { UsePaginationProps, useCardsPagination } from '../../../hooks/usePagination'
+import { MainSelect } from '../select'
 import { Typography } from '../typography'
 
 import s from './pagination.module.scss'
@@ -44,6 +45,11 @@ export const Pagination = (props: UsePaginationProps) => {
         <button onClick={nextPage} className={classNames.arrowRight}>
           &rsaquo;
         </button>
+        <div className={s.select}>
+          <Typography variant="body2">Показать </Typography>
+          <MainSelect value={['10', '20', '30', '50', '100']} defaultValue="10" />
+          <Typography>на странице</Typography>
+        </div>
       </div>
     </>
   )
