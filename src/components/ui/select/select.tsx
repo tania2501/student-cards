@@ -1,4 +1,4 @@
-import { Component, forwardRef, useState } from 'react'
+import { forwardRef, useState } from 'react'
 
 import * as Select from '@radix-ui/react-select'
 
@@ -7,20 +7,36 @@ import { Typography } from '../typography'
 
 import s from './select.module.scss'
 
-export const MainSelect = () => {
+type SelectPropsType = {
+  value: string[]
+  defaultValue: string
+}
+
+export const MainSelect = (props: SelectPropsType) => {
+  const [icon, setIcon] = useState<JSX.Element>(<SvgArrowDown />)
+  const change = () => {
+    if (icon.type.name === 'SvgArrowDown') {
+      setIcon(<SvgArrowTop />)
+    } else {
+      setIcon(<SvgArrowDown />)
+    }
+  }
 
   return (
     <div className={s.main}>
-      <Select.Root>
-        <Select.Trigger className={s.SelectTrigger} placeholder="Select a fruit…">
-          <Select.Value className={s.value} placeholder={'Select'} />
-          <Select.Icon className={s.SelectIcon}>
-            <SvgArrowDown />
-          </Select.Icon>
+      <Select.Root onOpenChange={change}>
+        <Select.Trigger className={s.SelectTrigger}>
+          <Select.Value className={s.value} placeholder={props.defaultValue} />
+          <Select.Icon className={s.SelectIcon}>{icon}</Select.Icon>
         </Select.Trigger>
         <Select.Content position="popper" className={s.SelectContent}>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="orange">Orange</SelectItem>
+          {props.value.map((el, i) => {
+            return (
+              <SelectItem key={i} value={el}>
+                {el}
+              </SelectItem>
+            )
+          })}
         </Select.Content>
       </Select.Root>
     </div>

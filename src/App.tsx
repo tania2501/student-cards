@@ -17,7 +17,7 @@ export function App() {
       <Header />
       <MainSlider value={[2, 10]} step={1} max={15} />
       <Pagination contentPerPage={1} count={12} />
-      <MainSelect />
+      <MainSelect value={['1', '2', '3']} defaultValue="Select" />
     </div>
   )
 }
