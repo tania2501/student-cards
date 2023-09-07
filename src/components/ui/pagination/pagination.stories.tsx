@@ -6,6 +6,14 @@ const meta = {
   title: 'Components/Pagination',
   component: Pagination,
   tags: ['autodocs'],
+  argTypes: {
+    contentPerPage: {
+      control: { type: 'number' },
+    },
+    count: {
+      control: { type: 'number' },
+    },
+  },
 } satisfies Meta<typeof Pagination>
 
 export default meta
@@ -14,6 +22,6 @@ type Story = StoryObj<typeof meta>
 export const CardsPagination: Story = {
   args: {
     contentPerPage: 1,
-    count: 16,
+    count: 12,
   },
 }

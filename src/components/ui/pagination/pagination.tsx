@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import clsx from 'clsx'
 
 import { UsePaginationProps, useCardsPagination } from '../../../hooks/usePagination'
@@ -7,8 +9,10 @@ import { Typography } from '../typography'
 import s from './pagination.module.scss'
 
 export const Pagination = (props: UsePaginationProps) => {
+  const [pageCount, setPageCount] = useState(JSON.stringify(props.contentPerPage))
+
   const { nextPage, prevPage, page, gaps, setPage, totalPages } = useCardsPagination({
-    contentPerPage: props.contentPerPage,
+    contentPerPage: JSON.parse(pageCount),
     count: props.count,
   })
 
@@ -18,6 +22,8 @@ export const Pagination = (props: UsePaginationProps) => {
     total: clsx(s.page, page === totalPages && s.active),
     first: clsx(s.page, page === 1 && s.active),
   }
+  const a = props.count / JSON.parse(pageCount) > 1
+  const b = props.count / JSON.parse(pageCount) > 2
 
   return (
     <>
@@ -29,25 +35,32 @@ export const Pagination = (props: UsePaginationProps) => {
           <Typography variant="body2">1</Typography>
         </button>
         {gaps.before ? '...' : null}
-        {gaps.paginationGroup.map(el => (
-          <button
-            onClick={() => setPage(el)}
-            key={el}
-            className={`${s.page} ${page === el && s.active}`}
-          >
-            <Typography variant="body2">{el}</Typography>
-          </button>
-        ))}
+        {b &&
+          gaps.paginationGroup.map(el => (
+            <button
+              onClick={() => setPage(el)}
+              key={el}
+              className={`${s.page} ${page === el && s.active}`}
+            >
+              <Typography variant="body2">{el}</Typography>
+            </button>
+          ))}
         {gaps.after ? '...' : null}
-        <button onClick={() => setPage(totalPages)} className={classNames.total}>
-          <Typography variant="body2">{totalPages}</Typography>
-        </button>
+        {a && (
+          <button onClick={() => setPage(totalPages)} className={classNames.total}>
+            <Typography variant="body2">{totalPages}</Typography>
+          </button>
+        )}
         <button onClick={nextPage} className={classNames.arrowRight}>
           &rsaquo;
         </button>
         <div className={s.select}>
           <Typography variant="body2">Показать </Typography>
-          <MainSelect value={['10', '20', '30', '50', '100']} defaultValue="10" />
+          <MainSelect
+            value={['5', '6', '10', '20', '30', '50', '100']}
+            defaultValue={pageCount}
+            onChange={setPageCount}
+          />
           <Typography>на странице</Typography>
         </div>
       </div>

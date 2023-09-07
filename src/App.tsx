@@ -1,3 +1,5 @@
+import { SetStateAction } from 'react'
+
 import { LoginForm } from './components/auth/login-form/login-form'
 import { CheckBox } from './components/ui/checkbox'
 import { Header } from './components/ui/header'
@@ -17,7 +19,7 @@ export function App() {
       <Header />
       <MainSlider value={[2, 10]} step={1} max={15} />
       <Pagination contentPerPage={1} count={12} />
-      <MainSelect value={['1', '2', '3']} defaultValue="Select" />
+      <MainSelect value={['1', '2', '3']} defaultValue="Select" onChange={() => {}} />
     </div>
   )
 }

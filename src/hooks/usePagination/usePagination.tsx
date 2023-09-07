@@ -76,7 +76,7 @@ export const useCardsPagination: UsePagination = ({ contentPerPage, count }) => 
       }
     }
     setGaps({ paginationGroup, before, after })
-  }, [page, pagesInBetween, pageCount])
+  }, [page, pagesInBetween, pageCount, contentPerPage])
 
   // change page based on direction either front or back
   const changePage = (direction: boolean) => {
