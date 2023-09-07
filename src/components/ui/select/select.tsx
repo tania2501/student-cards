@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react'
+import { Dispatch, SetStateAction, forwardRef, useState } from 'react'
 
 import * as Select from '@radix-ui/react-select'
 
@@ -8,6 +8,7 @@ import { Typography } from '../typography'
 import s from './select.module.scss'
 
 type SelectPropsType = {
+  onChange: Dispatch<SetStateAction<string>>
   value: string[]
   defaultValue: string
 }
@@ -24,7 +25,7 @@ export const MainSelect = (props: SelectPropsType) => {
 
   return (
     <div className={s.main}>
-      <Select.Root onOpenChange={change}>
+      <Select.Root onOpenChange={change} onValueChange={props.onChange}>
         <Select.Trigger className={s.SelectTrigger}>
           <Select.Value className={s.value} placeholder={props.defaultValue} />
           <Select.Icon className={s.SelectIcon}>{icon}</Select.Icon>
