@@ -32,7 +32,9 @@ export const Pagination = (props: UsePaginationProps) => {
           &lsaquo;
         </button>
         <button onClick={() => setPage(1)} className={classNames.first}>
-          <Typography variant="body2">1</Typography>
+          <Typography as="span" variant="body2">
+            1
+          </Typography>
         </button>
         {gaps.before ? '...' : null}
         {b &&
@@ -42,26 +44,32 @@ export const Pagination = (props: UsePaginationProps) => {
               key={el}
               className={`${s.page} ${page === el && s.active}`}
             >
-              <Typography variant="body2">{el}</Typography>
+              <Typography as="span" variant="body2">
+                {el}
+              </Typography>
             </button>
           ))}
         {gaps.after ? '...' : null}
         {a && (
           <button onClick={() => setPage(totalPages)} className={classNames.total}>
-            <Typography variant="body2">{totalPages}</Typography>
+            <Typography as="span" variant="body2">
+              {totalPages}
+            </Typography>
           </button>
         )}
         <button onClick={nextPage} className={classNames.arrowRight}>
           &rsaquo;
         </button>
         <div className={s.select}>
-          <Typography variant="body2">Показать </Typography>
+          <Typography as="span" variant="body2">
+            Показать{' '}
+          </Typography>
           <MainSelect
             value={['5', '6', '10', '20', '30', '50', '100']}
             defaultValue={pageCount}
             onChange={setPageCount}
           />
-          <Typography>на странице</Typography>
+          <Typography as="span">на странице</Typography>
         </div>
       </div>
     </>

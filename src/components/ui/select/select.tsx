@@ -34,7 +34,9 @@ export const MainSelect = (props: SelectPropsType) => {
           {props.value.map((el, i) => {
             return (
               <SelectItem key={i} value={el}>
-                <Typography variant="body2">{el}</Typography>
+                <Typography as="span" variant="body2">
+                  {el}
+                </Typography>
               </SelectItem>
             )
           })}
@@ -49,7 +51,9 @@ const SelectItem = forwardRef<HTMLDivElement, Select.SelectItemProps>(
     return (
       <Select.Item className={s.SelectItem} {...props} ref={ref}>
         <Select.ItemText>
-          <Typography variant="body1">{children}</Typography>
+          <Typography as="span" variant="body1">
+            {children}
+          </Typography>
         </Select.ItemText>
         <Select.ItemIndicator className={s.SelectItemIndicator}></Select.ItemIndicator>
       </Select.Item>
