@@ -21,18 +21,23 @@ const menuItems: MenuItemsType[] = [
   { icon: <SvgOut />, text: 'Log out' },
 ]
 
+const options = [
+  { value: '1', label: 'yes' },
+  { value: '2', label: 'no' },
+]
+
 export function App() {
   return (
     <div style={{ paddingTop: '70px' }}>
       <CheckBox />
       <div style={{ width: '400px' }}>
-        <LoginForm />
+        <LoginForm options={options} />
       </div>
       <Header />
       <MainSlider value={[2, 10]} step={1} max={15} />
       <Pagination contentPerPage={1} count={12} />
       <MainSelect value={['1', '2', '3']} defaultValue="Select" onChange={() => {}} />
-      <CardsRadioGroup />
+      <CardsRadioGroup options={options} />
       <DropDownMenu items={menuItems} />
     </div>
   )

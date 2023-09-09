@@ -2,13 +2,13 @@ import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
 import { Input, InputProps } from '../../input'
 
-export type ControlledTextFieldProps<TFieldValues extends FieldValues> = {
-  name: FieldPath<TFieldValues>
-  control: Control<TFieldValues>
+export type ControlledInputProps<TInputValues extends FieldValues> = {
+  name: FieldPath<TInputValues>
+  control: Control<TInputValues>
 } & Omit<InputProps, 'onChange' | 'value' | 'id'>
 
-export const ControlledInput = <TFieldValues extends FieldValues>(
-  props: ControlledTextFieldProps<TFieldValues>
+export const ControlledInput = <TInputValues extends FieldValues>(
+  props: ControlledInputProps<TInputValues>
 ) => {
   const {
     field,
