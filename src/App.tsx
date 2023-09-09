@@ -4,7 +4,6 @@ import { Avatar } from './components/ui/avatar'
 import { CheckBox } from './components/ui/checkbox'
 import { DropDownMenu, MenuItemsType } from './components/ui/dropDownMenu/dropDownMenu'
 import { Header } from './components/ui/header'
-import { Input } from './components/ui/input'
 import { Pagination } from './components/ui/pagination'
 import { CardsRadioGroup } from './components/ui/radio-group'
 import { MainSelect } from './components/ui/select'
@@ -24,8 +23,7 @@ const menuItems: MenuItemsType[] = [
 
 export function App() {
   return (
-    <div>
-      <Input type="text" placeholder="Input" label="Input" errorMessage="aaa" />
+    <div style={{ paddingTop: '70px' }}>
       <CheckBox />
       <div style={{ width: '400px' }}>
         <LoginForm />
