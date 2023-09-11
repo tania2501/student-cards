@@ -1,5 +1,6 @@
 import { SvgAva, SvgOut } from './assets/icons/menu-icons'
 import { LoginForm } from './components/auth/login-form/login-form'
+import { SingIn } from './components/auth/sing-in/sing-in'
 import { Avatar } from './components/ui/avatar'
 import { CheckBox } from './components/ui/checkbox'
 import { DropDownMenu, MenuItemsType } from './components/ui/dropDownMenu/dropDownMenu'
@@ -39,6 +40,7 @@ export function App() {
       <MainSelect value={['1', '2', '3']} defaultValue="Select" onChange={() => {}} />
       <CardsRadioGroup options={options} />
       <DropDownMenu items={menuItems} />
+      <SingIn />
     </div>
   )
 }
