@@ -25,7 +25,11 @@ export const CheckBox = (props: CheckboxProps) => {
       onCheckedChange={onChange}
     >
       {checked ? <CheckboxIcon /> : <UncheckedIcon />}
-      {label && <Typography variant="body2">{label}</Typography>}
+      {label && (
+        <Typography variant="body2" className={s.label}>
+          {label}
+        </Typography>
+      )}
     </Checkbox.Root>
   )
 }
