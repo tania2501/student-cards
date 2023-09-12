@@ -6,48 +6,52 @@ import { z } from 'zod'
 
 import { Button } from '../../ui/button'
 import { Card } from '../../ui/card'
-import { ControlledCheckbox } from '../../ui/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '../../ui/controlled/controlled-checkbox/controlled-input'
 import { Typography } from '../../ui/typography'
 import s from '../auth.module.scss'
 
-export const SingIn = () => {
-  const onSubmit = (data: FormValues) => {
+export const SingUp = () => {
+  const onSubmit = (data: SingUpFormValues) => {
     // eslint-disable-next-line no-console
     console.log(data)
   }
 
   return (
     <Card className={s.paper}>
-      <Typography variant="large">Sing In</Typography>
+      <Typography variant="large">Sing Up</Typography>
       <SingInForm onSubmit={onSubmit} />
       <Typography variant="body2" className={s.text}>
-        Don't have an account?
+        Already have an account?
       </Typography>
       <Typography variant="link1" className={s.Link}>
-        Sign Up
+        Sign In
       </Typography>
     </Card>
   )
 }
 
-const loginSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-  password: z.string().min(3, { message: 'Must be exactly 5 characters long' }),
-  rememberMe: z.boolean().default(false),
-})
+const loginSchema = z
+  .object({
+    email: z.string().email({ message: 'Invalid email address' }),
+    password: z.string().min(3, { message: 'Must be exactly 5 characters long' }),
+    confirmPassword: z.string().min(3, { message: 'Must be exactly 5 characters long' }),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  })
 
-export type FormValues = z.infer<typeof loginSchema>
+export type SingUpFormValues = z.infer<typeof loginSchema>
 type SubmitProps = {
-  onSubmit: (data: FormValues) => void
+  onSubmit: (data: SingUpFormValues) => void
 }
 const SingInForm = (props: SubmitProps) => {
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<SingUpFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
-      rememberMe: false,
+      confirmPassword: '',
     },
   })
 
@@ -60,10 +64,10 @@ const SingInForm = (props: SubmitProps) => {
           name="email"
           label="Email"
           placeholder="Email"
-          id="sing-in-email"
+          id="sing-up-email"
         />
         <ControlledInput
-          id="sing-in-passwoprd"
+          id="sing-up-password"
           type="password"
           name="password"
           control={control}
@@ -71,13 +75,18 @@ const SingInForm = (props: SubmitProps) => {
           placeholder="Password"
           autoComplete="on"
         />
+        <ControlledInput
+          id="confirm-password"
+          type="password"
+          name="confirmPassword"
+          control={control}
+          label="Confirm password"
+          placeholder="Confirm password"
+          autoComplete="on"
+        />
       </div>
-      <ControlledCheckbox label={'remember me'} control={control} name={'rememberMe'} />
-      <Typography variant="body2" className={s.forgot}>
-        Forgot Password?
-      </Typography>
-      <Button variant="primary" type="submit" fullWidth>
-        Sing In
+      <Button variant="primary" type="submit" fullWidth className={s.button}>
+        Sing Up
       </Button>
     </form>
   )

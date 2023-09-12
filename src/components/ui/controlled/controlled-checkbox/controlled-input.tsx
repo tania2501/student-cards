@@ -5,6 +5,7 @@ import { Input, InputProps } from '../../input'
 export type ControlledInputProps<TInputValues extends FieldValues> = {
   name: FieldPath<TInputValues>
   control: Control<TInputValues>
+  id: string
 } & Omit<InputProps, 'onChange' | 'value' | 'id'>
 
 export const ControlledInput = <TInputValues extends FieldValues>(
@@ -18,5 +19,5 @@ export const ControlledInput = <TInputValues extends FieldValues>(
     control: props.control,
   })
 
-  return <Input {...props} {...field} errorMessage={error?.message} id={props.name} />
+  return <Input {...props} {...field} errorMessage={error?.message} id={props.id} />
 }
