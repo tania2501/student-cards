@@ -1,24 +1,32 @@
 .paper {
   max-width: 413px;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 33px;
-
   text-align: center;
-
-  // background-color: var(--color-dark-700);
 }
 
 .inputs {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  margin-bottom: 24px;
 }
 
 .forgot {
-  margin-bottom: 69px;
+  margin:29px 0 69px;
   text-align: right;
 }
 
 .text {
   margin: 21px 0 11px;
+}
+
+.button {
+  margin-top: 34px;
+}
+
+.Link {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent-500);
 }
