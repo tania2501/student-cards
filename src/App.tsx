@@ -1,5 +1,6 @@
 import { SvgAva, SvgOut } from './assets/icons/menu-icons'
-import { LoginForm } from './components/auth/login-form/login-form'
+import { ForgotPassword } from './components/auth/forgot password/forgot'
+import { SchemaType } from './components/auth/form schema/schema'
 import { SingIn } from './components/auth/sing-in/sing-in'
 import { SingUp } from './components/auth/sing-up/sing-up'
 import { Avatar } from './components/ui/avatar'
@@ -27,22 +28,24 @@ const options = [
   { value: '1', label: 'yes' },
   { value: '2', label: 'no' },
 ]
+const onSubmit = (data: any) => {
+  // eslint-disable-next-line no-console
+  console.log(data)
+}
 
 export function App() {
   return (
     <div style={{ paddingTop: '70px' }}>
       <CheckBox />
-      <div style={{ width: '400px' }}>
-        <LoginForm options={options} />
-      </div>
       <Header />
       <MainSlider value={[2, 10]} step={1} max={15} />
       <Pagination contentPerPage={1} count={12} />
       <MainSelect value={['1', '2', '3']} defaultValue="Select" onChange={() => {}} />
       <CardsRadioGroup options={options} />
       <DropDownMenu items={menuItems} />
-      <SingIn />
-      <SingUp />
+      <SingIn onSubmit={onSubmit} />
+      <SingUp onSubmit={onSubmit} />
+      <ForgotPassword onSubmit={onSubmit} />
     </div>
   )
 }

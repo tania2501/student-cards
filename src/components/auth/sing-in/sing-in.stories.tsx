@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { FormValues, SingIn } from './sing-in'
+import { SingIn } from './sing-in'
 
 const meta = {
   title: 'Auth/SingIn',
@@ -14,6 +14,6 @@ type Story = StoryObj<typeof meta>
 export const SingInStory: Story = {
   args: {
     // eslint-disable-next-line no-console
-    onSubmit: (data: FormValues) => console.info(data),
+    onSubmit: (data: any) => console.info(data),
   },
 }
