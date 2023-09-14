@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { NewPassword } from './createNewPassword'
 
 const meta = {
-  title: 'Auth/ForgotPassword',
+  title: 'Auth/NewPassword',
   component: NewPassword,
   tags: ['autodocs'],
 } satisfies Meta<typeof NewPassword>
