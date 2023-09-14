@@ -1,6 +1,5 @@
 import { SvgAva, SvgOut } from './assets/icons/menu-icons'
 import { ForgotPassword } from './components/auth/forgot password/forgot'
-import { SchemaType } from './components/auth/form schema/schema'
 import { SingIn } from './components/auth/sing-in/sing-in'
 import { SingUp } from './components/auth/sing-up/sing-up'
 import { Avatar } from './components/ui/avatar'

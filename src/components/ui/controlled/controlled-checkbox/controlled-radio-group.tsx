@@ -1,4 +1,4 @@
-import { Control, FieldPath, FieldValues, UseFormRegister, useController } from 'react-hook-form'
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
 import { CardsRadioGroup, RadioGroupProps } from '@/components/ui/radio-group'
 
