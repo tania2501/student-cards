@@ -1,4 +1,5 @@
 import { SvgAva, SvgOut } from './assets/icons/menu-icons'
+import { CheckEmail } from './components/auth/Check email/check'
 import { NewPassword } from './components/auth/create new password/createNewPassword'
 import { ForgotPassword } from './components/auth/forgot password/forgot'
 import { SingIn } from './components/auth/sing-in/sing-in'
@@ -47,6 +48,7 @@ export function App() {
       <SingUp onSubmit={onSubmit} />
       <ForgotPassword onSubmit={onSubmit} />
       <NewPassword onSubmit={onSubmit} />
+      <CheckEmail />
     </div>
   )
 }
