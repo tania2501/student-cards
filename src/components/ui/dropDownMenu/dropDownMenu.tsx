@@ -14,6 +14,12 @@ export type MenuItemsType = {
 }
 type DropDownType = {
   items: MenuItemsType[]
+  avatar?: string
+  userInfo?: {
+    name: string
+    avatar?: string
+    email: string
+  } | null
 }
 export const DropDownMenu = (props: DropDownType) => {
   const [open, setOpen] = useState(false)
@@ -22,12 +28,9 @@ export const DropDownMenu = (props: DropDownType) => {
     <div className={s.main}>
       <DropdownMenu.Root open={open} onOpenChange={setOpen}>
         <DropdownMenu.Trigger asChild>
-          <button className={s.IconButton} aria-label="Customise options">
-            <Avatar
-              src={
-                'https://png2.cleanpng.com/sh/a763c2aa5f08b95da4bc5c15cfb8c7c8/L0KzQYm4UcI5N6V3epH0aYP2gLBuTf5qdptmReJ4coTkcr3sTf5mfKh0it02Z4LkgLnwgCMua5DyiOd9ZYKwebT2jwMuaadmRd9qY33kc77og702apdqeaYEY0fnQYrrUL4xOWc3S6U6NkG4RIS7UcQ6PGE6SaQ9LoDxd1==/kisspng-ninja-portable-network-graphics-computer-icons-ava-macmacmac-5bfea49c7d19d0.0162331615434149405124.png'
-              }
-            />
+          <button className={s.IconButton} aria-label="Customize options">
+            <Typography variant="subtitle">{props.userInfo?.name}</Typography>
+            <Avatar src={props.avatar ? props.avatar : ''} />
           </button>
         </DropdownMenu.Trigger>
 
