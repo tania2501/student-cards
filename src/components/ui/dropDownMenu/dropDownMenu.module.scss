@@ -76,13 +76,16 @@ p {
 }
 
 .IconButton {
-  font-family: inherit;
-  border-radius: 100%;
-  height: 35px;
-  width: 35px;
   display: inline-flex;
+  gap: 14px;
   align-items: center;
-  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+
+  font-family: inherit;
+
+  border-radius: 100%;
 }
 
 .IconButton:hover {
