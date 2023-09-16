@@ -32,7 +32,7 @@ export const Header = (props: HeaderProps) => {
       <div className={s.container}>
         <SvgLogo />
         {props.isAuth ? (
-          <DropDownMenu items={menuItems} avatar={ava} />
+          <DropDownMenu items={menuItems} avatar={ava} userInfo={{ name: 'Tania' }} />
         ) : (
           <Button as="a" href="/login">
             Sing In

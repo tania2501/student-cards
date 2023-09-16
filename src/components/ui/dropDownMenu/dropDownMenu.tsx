@@ -18,7 +18,7 @@ type DropDownType = {
   userInfo?: {
     name: string
     avatar?: string
-    email: string
+    email?: string
   } | null
 }
 export const DropDownMenu = (props: DropDownType) => {
