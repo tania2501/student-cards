@@ -23,7 +23,14 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['Me'],
     }),
+    signUp: builder.mutation({
+      query: body => ({
+        url: 'auth/sign-up',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useGetMeQuery, useLoginMutation } = authApi
+export const { useGetMeQuery, useLoginMutation, useSignUpMutation } = authApi
