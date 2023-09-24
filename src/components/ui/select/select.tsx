@@ -8,9 +8,9 @@ import { Typography } from '../typography'
 import s from './select.module.scss'
 
 type SelectPropsType = {
-  onChange: Dispatch<SetStateAction<string>>
+  onChange?: Dispatch<SetStateAction<string>>
   value: string[]
-  defaultValue: string
+  defaultValue?: string
 }
 
 export const MainSelect = (props: SelectPropsType) => {
