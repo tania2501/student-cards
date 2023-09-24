@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SingIn } from './sing-in'
+import { SignUp } from './sign-up'
 
 const meta = {
-  title: 'Auth/SingIn',
-  component: SingIn,
+  title: 'Auth/SignUp',
+  component: SignUp,
   tags: ['autodocs'],
-} satisfies Meta<typeof SingIn>
+} satisfies Meta<typeof SignUp>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const SingInStory: Story = {
+export const SignUpStory: Story = {
   args: {
     // eslint-disable-next-line no-console
     onSubmit: (data: any) => console.info(data),

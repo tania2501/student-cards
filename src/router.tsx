@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom'
 
 import { LoginPage } from './pages/login'
-import { useGetDecksQuery } from './services/decks/decks.service'
+import { SignUpPage } from './pages/signup'
+import { useGetMeQuery } from './services/auth/auth.service'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -16,6 +17,10 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/singup',
+    element: <SignUpPage />,
+  },
+  {
+    path: '/forgot-password',
     element: <></>,
   },
 ]
@@ -36,15 +41,14 @@ const router = createBrowserRouter([
 ])
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data: me, isLoading: isMeLoading } = useGetMeQuery()
+  const isAuthenticated = !!me
+
+  if (isMeLoading) return <div>Loading...</div>
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
 
 export const Router = () => {
-  const result = useGetDecksQuery(null)
-
-  console.log(result)
-
   return <RouterProvider router={router} />
 }

@@ -53,6 +53,9 @@ dependencies:
   react-use-pagination:
     specifier: ^2.0.1
     version: 2.0.1(react@18.2.0)
+  remeda:
+    specifier: ^1.27.0
+    version: 1.27.0
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -8719,6 +8722,10 @@ packages:
       mdast-util-to-string: 1.1.0
       unist-util-visit: 2.0.3
     dev: true
+
+  /remeda@1.27.0:
+    resolution: {integrity: sha512-Vv4gz6z8WnKPA01ObvswV09bBOkB/jKjlszsfxAH82YEvEWfVvaelUuKOpKkLwlli1xyAwwlfWAAmpHlSXENRQ==}
+    dev: false
 
   /require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
