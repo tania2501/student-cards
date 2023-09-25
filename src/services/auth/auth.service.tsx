@@ -1,14 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { baseQueryWithReauth } from '../base-query-with-reauth'
 
 import { LoginType, UserType } from './types'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   tagTypes: ['Me'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_API_URL,
-    credentials: 'include',
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: builder => ({
     getMe: builder.query<UserType | null, void>({
       query: () => 'auth/me',
