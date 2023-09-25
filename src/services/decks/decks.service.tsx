@@ -1,12 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { baseQueryWithReauth } from '../base-query-with-reauth'
 
 export const decksApi = createApi({
   reducerPath: 'decksApi',
   tagTypes: ['Decks'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_API_URL,
-    credentials: 'include',
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: builder => ({
     getDecks: builder.query({
       query: params => {
