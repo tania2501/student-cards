@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { Decks } from './pages/decks/decks'
 import { LoginPage } from './pages/login'
 import { SignUpPage } from './pages/signup'
 import { useGetMeQuery } from './services/auth/auth.service'
@@ -28,7 +29,7 @@ const publicRoutes: RouteObject[] = [
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <div>hello</div>,
+    element: <Decks />,
   },
 ]
 

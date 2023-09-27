@@ -6,22 +6,26 @@ interface Gap {
   after: boolean
 }
 export interface UsePaginationProps {
+  currentPage: number
+  setCurrentPage: (page: number) => void
   contentPerPage: number
   count: number
 }
 interface UsePaginationReturn {
-  page: number
+  currentPage: number
   totalPages: number
   firstContentIndex: number
   lastContentIndex: number
-  nextPage: () => void
-  prevPage: () => void
-  setPage: (page: number) => void
+  setCurrentPage: (page: number) => void
   gaps: Gap
 }
 type UsePagination = (arg: UsePaginationProps) => UsePaginationReturn
-export const useCardsPagination: UsePagination = ({ contentPerPage, count }) => {
-  const [page, setPage] = useState(1)
+export const useCardsPagination: UsePagination = ({
+  contentPerPage,
+  count,
+  currentPage,
+  setCurrentPage,
+}) => {
   // like 3 dots that surrounds the immediate pages
   const [gaps, setGaps] = useState<Gap>({
     before: false,
@@ -31,7 +35,7 @@ export const useCardsPagination: UsePagination = ({ contentPerPage, count }) => 
   // number of pages in total (total items / content on each page)
   const pageCount = Math.ceil(count / contentPerPage)
   // index of last item of current page
-  const lastContentIndex = page * contentPerPage
+  const lastContentIndex = currentPage * contentPerPage
   // index of first item of current page
   const firstContentIndex = lastContentIndex - contentPerPage
   //Pages between the first and last pages
@@ -48,19 +52,23 @@ export const useCardsPagination: UsePagination = ({ contentPerPage, count }) => 
   // to set the pages between the gaps depending on position of current page
   //and to setGaps Depending on position of current page
   useEffect(() => {
-    const currentLocation = pagesInBetween.indexOf(page)
+    const currentLocation = pagesInBetween.indexOf(currentPage)
     let paginationGroup = []
     let before = false
     let after = false
 
-    if (page === 1) {
+    if (currentPage === 1) {
       paginationGroup = pagesInBetween.slice(0, 3)
-    } else if (page === pageCount || page === pageCount - 1 || page === pageCount - 2) {
+    } else if (
+      currentPage === pageCount ||
+      currentPage === pageCount - 1 ||
+      currentPage === pageCount - 2
+    ) {
       paginationGroup = pagesInBetween.slice(-3, pageCount)
-    } else if (page === 2) {
+    } else if (currentPage === 2) {
       paginationGroup = pagesInBetween.slice(currentLocation, currentLocation + 3)
     } else {
-      paginationGroup = [page - 1, page, page + 1]
+      paginationGroup = [currentPage - 1, currentPage, currentPage + 1]
     }
     if (pageCount <= 5) {
       before = false
@@ -76,51 +84,28 @@ export const useCardsPagination: UsePagination = ({ contentPerPage, count }) => 
       }
     }
     setGaps({ paginationGroup, before, after })
-  }, [page, pagesInBetween, pageCount, contentPerPage])
+  }, [currentPage, pagesInBetween, pageCount, contentPerPage])
 
   // change page based on direction either front or back
-  const changePage = (direction: boolean) => {
-    setPage(state => {
-      // move forward
-      if (direction) {
-        // if page is the last page, do nothing
-        if (state === pageCount) {
-          return state
-        }
-
-        return state + 1
-        // go back
-      } else {
-        // if page is the first page, do nothing
-        if (state === 1) {
-          return state
-        }
-
-        return state - 1
-      }
-    })
-  }
 
   const setPageSAFE = (num: number) => {
     // if number is greater than number of pages, set to last page
     if (num > pageCount) {
-      setPage(pageCount)
+      setCurrentPage(pageCount)
       // if number is less than 1, set page to first page
     } else if (num < 1) {
-      setPage(1)
+      setCurrentPage(1)
     } else {
-      setPage(num)
+      setCurrentPage(num)
     }
   }
 
   return {
     totalPages: pageCount,
-    nextPage: () => changePage(true),
-    prevPage: () => changePage(false),
-    setPage: setPageSAFE,
+    setCurrentPage: setPageSAFE,
     firstContentIndex,
     lastContentIndex,
-    page,
+    currentPage,
     gaps,
   }
 }

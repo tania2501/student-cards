@@ -90,7 +90,7 @@ export const Header: FC<
         {columns.map(({ title, key, sortable }) => (
           <HeaderCell key={key} onClick={handleSort(key, sortable)} sortable={sortable}>
             {title}
-            {sort?.key === key ? <SvgArrowDown /> : <SvgArrowTop />}
+            {sort?.key === key ? <SvgArrowDown /> : ''}
           </HeaderCell>
         ))}
       </Row>
@@ -105,4 +105,5 @@ export const Table = {
   Row,
   Body,
   Cell,
+  Header,
 }
