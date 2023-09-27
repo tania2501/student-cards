@@ -1,37 +1,40 @@
-import { useState } from 'react'
-
 import clsx from 'clsx'
 
 import { UsePaginationProps, useCardsPagination } from '../../../hooks/usePagination'
-import { MainSelect } from '../select'
 import { Typography } from '../typography'
 
 import s from './pagination.module.scss'
-
-export const Pagination = (props: UsePaginationProps) => {
-  const [pageCount, setPageCount] = useState(JSON.stringify(props.contentPerPage))
-
-  const { nextPage, prevPage, page, gaps, setPage, totalPages } = useCardsPagination({
-    contentPerPage: JSON.parse(pageCount),
+type PaginationType = UsePaginationProps & {
+  currentPage: number
+  setCurrentPage: (page: number) => void
+}
+export const Pagination = (props: PaginationType) => {
+  const { setCurrentPage, gaps, currentPage, totalPages } = useCardsPagination({
+    contentPerPage: props.contentPerPage,
     count: props.count,
+    currentPage: props.currentPage,
+    setCurrentPage: props.setCurrentPage,
   })
 
   const classNames = {
-    arrowLeft: clsx(s.arrow, page === 1 && s.disabled),
-    arrowRight: clsx(s.arrow, page === totalPages && s.disabled),
-    total: clsx(s.page, page === totalPages && s.active),
-    first: clsx(s.page, page === 1 && s.active),
+    arrowLeft: clsx(s.arrow, currentPage === 1 && s.disabled),
+    arrowRight: clsx(s.arrow, currentPage === totalPages && s.disabled),
+    total: clsx(s.page, currentPage === totalPages && s.active),
+    first: clsx(s.page, currentPage === 1 && s.active),
   }
-  const a = props.count / JSON.parse(pageCount) > 1
-  const b = props.count / JSON.parse(pageCount) > 2
+  const a = props.count / props.contentPerPage > 1
+  const b = props.count / props.contentPerPage > 2
 
   return (
     <>
       <div className={s.pagination}>
-        <button onClick={prevPage} className={classNames.arrowLeft}>
+        <button
+          onClick={() => props.setCurrentPage(props.currentPage - 1)}
+          className={classNames.arrowLeft}
+        >
           &lsaquo;
         </button>
-        <button onClick={() => setPage(1)} className={classNames.first}>
+        <button onClick={() => setCurrentPage(1)} className={classNames.first}>
           <Typography as="span" variant="body2">
             1
           </Typography>
@@ -40,9 +43,9 @@ export const Pagination = (props: UsePaginationProps) => {
         {b &&
           gaps.paginationGroup.map(el => (
             <button
-              onClick={() => setPage(el)}
+              onClick={() => setCurrentPage(el)}
               key={el}
-              className={`${s.page} ${page === el && s.active}`}
+              className={`${s.page} ${currentPage === el && s.active}`}
             >
               <Typography as="span" variant="body2">
                 {el}
@@ -51,26 +54,18 @@ export const Pagination = (props: UsePaginationProps) => {
           ))}
         {gaps.after ? '...' : null}
         {a && (
-          <button onClick={() => setPage(totalPages)} className={classNames.total}>
+          <button onClick={() => setCurrentPage(totalPages)} className={classNames.total}>
             <Typography as="span" variant="body2">
               {totalPages}
             </Typography>
           </button>
         )}
-        <button onClick={nextPage} className={classNames.arrowRight}>
+        <button
+          onClick={() => props.setCurrentPage(props.currentPage + 1)}
+          className={classNames.arrowRight}
+        >
           &rsaquo;
         </button>
-        <div className={s.select}>
-          <Typography as="span" variant="body2">
-            Показать{' '}
-          </Typography>
-          <MainSelect
-            value={['5', '6', '10', '20', '30', '50', '100']}
-            defaultValue={pageCount}
-            onChange={setPageCount}
-          />
-          <Typography as="span">на странице</Typography>
-        </div>
       </div>
     </>
   )
