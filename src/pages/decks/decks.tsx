@@ -100,7 +100,7 @@ export const Decks = () => {
             Показать
           </Typography>
           <MainSelect
-            value={['5', '6', '10', '20']}
+            value={['5', '10', '15', '20']}
             defaultValue={JSON.stringify(decks?.pagination.itemsPerPage) ?? 1}
             onChange={setPageCount}
           />
