@@ -18,6 +18,19 @@
   align-items: center;
   justify-content: space-between;
 
-  max-width: 1200px;
+  max-width: 80%;
   margin: 0 auto;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+
+  p {
+    margin-left: 10px;
+  }
+  
+  .email {
+    color: var(--color-dark-100)
+  }
 }
