@@ -1,38 +1,49 @@
 import { SvgLogo } from '../../../assets/icons/logo'
 import { SvgAva, SvgOut } from '../../../assets/icons/menu-icons'
 import ava from '../../../assets/IMG_20230424_174148.jpg'
+import { useGetMeQuery } from '../../../services/auth/auth.service'
 import { Avatar } from '../avatar'
 import { Button } from '../button'
-import { DropDownMenu, MenuItemsType } from '../dropDownMenu'
+import { DropDownMenu, DropDownMenuItem } from '../dropDownMenu'
+import { Typography } from '../typography'
 
 import s from './header.module.scss'
-type HeaderProps = {
-  isAuth: boolean
-  userInfo?: {
-    name: string
-    avatar?: string
-    email: string
-  } | null
-  onSignOut?: () => void
-}
 
-export const Header = (props: HeaderProps) => {
-  const menuItems: MenuItemsType[] = [
-    {
-      icon: <Avatar src={props.userInfo?.avatar || ''} />,
-      text: props.userInfo?.name || 'Name',
-      email: props.userInfo?.email || 'Email',
-    },
-    { icon: <SvgAva />, text: 'My Profile' },
-    { icon: <SvgOut />, text: 'Log out' },
-  ]
+export const Header = () => {
+  const { data: me } = useGetMeQuery()
 
   return (
     <header className={s.header}>
       <div className={s.container}>
         <SvgLogo />
-        {props.isAuth ? (
-          <DropDownMenu items={menuItems} avatar={ava} userInfo={{ name: 'Tania' }} />
+        {me ? (
+          <DropDownMenu userInfo={me} avatar={ava}>
+            <DropDownMenuItem>
+              <div className={s.menuItem}>
+                <Avatar src={ava} />
+                <div>
+                  <Typography as={'p'} variant={'subtitle2'}>
+                    {me.name}
+                  </Typography>
+                  <Typography as={'p'} variant={'caption'} className={s.email}>
+                    {me.email}
+                  </Typography>
+                </div>
+              </div>
+            </DropDownMenuItem>
+            <DropDownMenuItem>
+              <div className={s.menuItem}>
+                <SvgAva />
+                <p>My profile</p>
+              </div>
+            </DropDownMenuItem>
+            <DropDownMenuItem>
+              <div className={s.menuItem}>
+                <SvgOut />
+                <p>Log out</p>
+              </div>
+            </DropDownMenuItem>
+          </DropDownMenu>
         ) : (
           <Button as="a" href="/login">
             Sing In

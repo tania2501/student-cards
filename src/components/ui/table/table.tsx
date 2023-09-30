@@ -2,7 +2,7 @@ import { ComponentProps, FC } from 'react'
 
 import clsx from 'clsx'
 
-import { SvgArrowDown, SvgArrowTop } from '../../../assets/icons/arrow'
+import { SvgArrowDown } from '../../../assets/icons/arrow'
 
 import s from './table.module.scss'
 

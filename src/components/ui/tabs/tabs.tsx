@@ -6,21 +6,32 @@ import s from './tabs.module.scss'
 
 type TabsType = Tabs.TabsProps & {
   tabsTitle: string[]
-  myDecks: any
-  usersDecks: any
+  show: boolean
+  setShow: (show: boolean) => void
 }
-export const CardsTabs: FC<TabsType> = ({ tabsTitle, myDecks, usersDecks, ...rest }) => {
+export const CardsTabs: FC<TabsType> = ({ tabsTitle, show, setShow, children, ...rest }) => {
   return (
-    <Tabs.Root defaultValue="tab1" {...rest}>
+    <Tabs.Root defaultValue={tabsTitle[1]} {...rest}>
       <Tabs.List className={s.tabList}>
-        {tabsTitle.map((t, i) => (
-          <Tabs.Trigger value={t} key={i} className={s.tabTitle}>
-            {t}
-          </Tabs.Trigger>
-        ))}
+        <Tabs.Trigger
+          value={tabsTitle[0]}
+          className={s.tabTitle}
+          onClick={() => setShow(true)}
+          data-state={show ? 'active' : 'inactive'}
+        >
+          {tabsTitle[0]}
+        </Tabs.Trigger>
+        <Tabs.Trigger
+          value={tabsTitle[1]}
+          className={s.tabTitle}
+          onClick={() => setShow(false)}
+          data-state={show ? 'inactive' : 'active'}
+        >
+          {tabsTitle[1]}
+        </Tabs.Trigger>
       </Tabs.List>
-      <Tabs.Content value={'tab1'}>{myDecks}</Tabs.Content>
-      <Tabs.Content value={'tab2'}>{usersDecks}</Tabs.Content>
+      <Tabs.Content value={tabsTitle[0]}>{children}</Tabs.Content>
+      <Tabs.Content value={tabsTitle[1]}>{children}</Tabs.Content>
     </Tabs.Root>
   )
 }

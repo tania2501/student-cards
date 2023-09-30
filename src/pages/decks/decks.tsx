@@ -3,9 +3,13 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { SvgDelete, SvgEdit, SvgPlay } from '../../assets/icons/menu-icons'
+import { Button } from '../../components/ui/button'
+import { Input } from '../../components/ui/input'
 import { Pagination } from '../../components/ui/pagination'
 import { MainSelect } from '../../components/ui/select'
+import { MainSlider } from '../../components/ui/slider'
 import { Column, Sort, Table } from '../../components/ui/table'
+import { CardsTabs } from '../../components/ui/tabs'
 import { Typography } from '../../components/ui/typography'
 import { useGetMeQuery } from '../../services/auth/auth.service'
 import { useGetDecksQuery } from '../../services/decks/decks.service'
@@ -46,6 +50,11 @@ export const Decks = () => {
   const sortString = sort ? `${sort.key}-${sort.direction}` : null
   const [pageCount, setPageCount] = useState(JSON.stringify(10))
   const [page, setPage] = useState<number>(1)
+  const resetFilters = () => {
+    setSearch('')
+    setShowMyDecks(false)
+    setRange([0, 100])
+  }
 
   const { data: user } = useGetMeQuery()
   const { data: decks } = useGetDecksQuery({
@@ -60,6 +69,31 @@ export const Decks = () => {
 
   return (
     <div>
+      <div className={s.header}>
+        <Input type="search" placeholder="Input search" value={search} onValueChange={setSearch} />
+        <div>
+          <Typography as="p" variant="body2" className={s.title}>
+            Show packs cards
+          </Typography>
+          <CardsTabs
+            tabsTitle={['My cards', 'All cards ']}
+            show={showMyDecks}
+            setShow={setShowMyDecks}
+          />
+        </div>
+        <div>
+          <Typography as={'p'} variant={'body2'} className={s.title}>
+            Number of cards
+          </Typography>
+          <MainSlider value={range} onValueChange={setRange} />
+        </div>
+
+        <Button variant="secondary" onClick={resetFilters}>
+          <SvgDelete />
+          <Typography variant="subtitle2">Clear Filter</Typography>
+        </Button>
+      </div>
+
       <Table.Root>
         <Table.Header columns={columns} sort={sort} onSort={setSort} />
         <Table.Body>

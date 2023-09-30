@@ -45,7 +45,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }
     const finalType = getFinalType(type, visible)
     const classNames = {
-      input: clsx(s.input, !!isTypeSearch && s.svgSearch, !!errorMessage && s.error),
+      input: clsx(className, s.input, !!isTypeSearch && s.svgSearch, !!errorMessage && s.error),
       label: clsx(s.label),
       container: clsx(s.main),
       visible: clsx(s.visible),
