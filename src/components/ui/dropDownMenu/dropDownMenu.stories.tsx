@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SvgAva, SvgOut } from '../../../assets/icons/menu-icons'
+import { SvgAva } from '../../../assets/icons/menu-icons'
 
-import { DropDownMenu } from '.'
+import { DropDownMenu, DropDownMenuItem } from '.'
+
+import ava from '@/assets/IMG_20230424_174148.jpg'
 
 const meta = {
   title: 'Components/DropDownMenu',
@@ -15,9 +17,21 @@ type Story = StoryObj<typeof meta>
 
 export const DropDown: Story = {
   args: {
-    items: [
-      { icon: <SvgAva />, text: 'My Profile' },
-      { icon: <SvgOut />, text: 'Log out' },
-    ],
+    avatar: ava,
+    userInfo: {
+      name: 'Tania',
+    },
+    children: (
+      <>
+        <DropDownMenuItem>
+          <SvgAva />
+          <p>My profile</p>
+        </DropDownMenuItem>
+        <DropDownMenuItem>
+          <SvgAva />
+          <p>My text</p>
+        </DropDownMenuItem>
+      </>
+    ),
   },
 }
