@@ -13,7 +13,7 @@ export const CheckEmail = () => {
   }
 
   return (
-    <Card className={s.paper}>
+    <Card>
       <Typography variant="large" className={s.title}>
         Check your email
       </Typography>

@@ -9,6 +9,7 @@ import {
 import { Layout } from './components/ui/header'
 import { Decks } from './pages/decks/decks'
 import { LoginPage } from './pages/login'
+import { Profile } from './pages/profile'
 import { SignUpPage } from './pages/signup'
 import { useGetMeQuery } from './services/auth/auth.service'
 
@@ -31,6 +32,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Decks />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
 ]
 

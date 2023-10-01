@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '../base-query-with-reauth'
 
-import { LoginType, UserType } from './types'
+import { LoginResponse, LoginType, UserType } from './types'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -14,7 +14,7 @@ export const authApi = createApi({
       extraOptions: { maxRetries: false },
       providesTags: ['Me'],
     }),
-    login: builder.mutation<LoginType, any>({
+    login: builder.mutation<LoginResponse, LoginType>({
       query: data => ({
         url: 'auth/login',
         method: 'POST',
@@ -29,7 +29,15 @@ export const authApi = createApi({
         body,
       }),
     }),
-    logOut: builder.mutation({
+    changeName: builder.mutation<UserType, FormData>({
+      query: data => ({
+        url: 'auth/me',
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['Me'],
+    }),
+    logOut: builder.mutation<any, void>({
       query: data => ({
         url: 'auth/logout',
         method: 'POST',
@@ -52,4 +60,10 @@ export const authApi = createApi({
   }),
 })
 
-export const { useGetMeQuery, useLoginMutation, useSignUpMutation, useLogOutMutation } = authApi
+export const {
+  useGetMeQuery,
+  useLoginMutation,
+  useSignUpMutation,
+  useLogOutMutation,
+  useChangeNameMutation,
+} = authApi

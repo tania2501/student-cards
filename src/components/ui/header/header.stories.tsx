@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { BrowserRouter } from 'react-router-dom'
 
-import ava from '../../../assets/IMG_20230424_174148.jpg'
-
-import { Header } from '.'
+import { Header } from './header'
 
 const meta = {
   title: 'Layout/Header',
@@ -13,19 +12,25 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const Auth = () => {
+  return (
+    <BrowserRouter>
+      <Header isAuth={true} userInfo={{ name: 'Tania' }} />
+    </BrowserRouter>
+  )
+}
+const NotAuth = () => {
+  return (
+    <BrowserRouter>
+      <Header isAuth={false} />
+    </BrowserRouter>
+  )
+}
+
 export const NotAuthorized: Story = {
-  args: {
-    isAuth: false,
-  },
+  render: () => <Auth />,
 }
 
 export const Authorized: Story = {
-  args: {
-    isAuth: true,
-    userInfo: {
-      name: 'Tania',
-      avatar: ava,
-      email: 'evdunova@mail.com',
-    },
-  },
+  render: () => <NotAuth />,
 }

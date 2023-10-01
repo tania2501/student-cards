@@ -26,7 +26,7 @@ export const NewPassword = (props: SubmitProps) => {
   })
 
   return (
-    <Card className={s.paper}>
+    <Card>
       <Typography variant="large" className={s.title}>
         Create new password
       </Typography>

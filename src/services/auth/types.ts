@@ -11,3 +11,13 @@ export type UserType = {
   isEmailVerified: boolean
   avatar: string
 }
+
+export type ProfileData = {
+  avatar?: File
+  name?: string
+  email?: string
+}
+
+export type LoginResponse = {
+  accessToken: string
+}

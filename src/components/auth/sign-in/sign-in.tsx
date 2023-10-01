@@ -33,7 +33,7 @@ export const SignIn = (props: SubmitProps) => {
   })
 
   return (
-    <Card className={s.paper}>
+    <Card>
       <Typography variant="large" className={s.title}>
         Sign In
       </Typography>
