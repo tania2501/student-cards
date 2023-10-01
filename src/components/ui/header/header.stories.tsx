@@ -27,10 +27,10 @@ const NotAuth = () => {
   )
 }
 
-export const NotAuthorized: Story = {
+export const Authorized: Story = {
   render: () => <Auth />,
 }
 
-export const Authorized: Story = {
+export const NotAuthorized: Story = {
   render: () => <NotAuth />,
 }
