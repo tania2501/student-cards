@@ -29,7 +29,27 @@ export const authApi = createApi({
         body,
       }),
     }),
+    logOut: builder.mutation({
+      query: data => ({
+        url: 'auth/logout',
+        method: 'POST',
+        body: data,
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          authApi.util.updateQueryData('getMe', undefined, () => {
+            return null
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+    }),
   }),
 })
 
-export const { useGetMeQuery, useLoginMutation, useSignUpMutation } = authApi
+export const { useGetMeQuery, useLoginMutation, useSignUpMutation, useLogOutMutation } = authApi

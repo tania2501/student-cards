@@ -81,17 +81,9 @@ p {
   display: inline-flex;
   gap: 14px;
   align-items: center;
-
   font-family: inherit;
 
-  border-radius: 100%;
+  &:hover {
+    cursor: pointer;
+  }
 }
-
-.IconButton:hover {
-  cursor: pointer;
-}
-
-.IconButton:focus {
-  box-shadow: 0 0 0 2px black;
-}
-

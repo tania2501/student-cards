@@ -41,7 +41,7 @@ export const SignUp = (props: SubmitProps) => {
   return (
     <Card className={s.paper}>
       <Typography variant="large" className={s.title}>
-        Sing Up
+        Sign Up
       </Typography>
       <form onSubmit={handleFormSubmitted}>
         <DevTool control={control} />
