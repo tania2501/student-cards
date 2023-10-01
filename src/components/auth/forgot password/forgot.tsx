@@ -26,7 +26,7 @@ export const ForgotPassword = (props: SubmitProps) => {
   })
 
   return (
-    <Card className={s.paper}>
+    <Card>
       <Typography variant="large" className={s.title}>
         Forgot your password?
       </Typography>

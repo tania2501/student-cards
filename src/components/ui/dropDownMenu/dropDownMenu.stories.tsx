@@ -4,7 +4,7 @@ import { SvgAva } from '../../../assets/icons/menu-icons'
 
 import { DropDownMenu, DropDownMenuItem } from '.'
 
-import ava from '@/assets/IMG_20230424_174148.jpg'
+import ava from '@/assets/logo.jpg'
 
 const meta = {
   title: 'Components/DropDownMenu',
