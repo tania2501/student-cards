@@ -1,7 +1,9 @@
+import { Navigate, useNavigate } from 'react-router-dom'
+
 import { SvgLogo } from '../../../assets/icons/logo'
 import { SvgAva, SvgOut } from '../../../assets/icons/menu-icons'
 import ava from '../../../assets/IMG_20230424_174148.jpg'
-import { useGetMeQuery } from '../../../services/auth/auth.service'
+import { useGetMeQuery, useLogOutMutation } from '../../../services/auth/auth.service'
 import { Avatar } from '../avatar'
 import { Button } from '../button'
 import { DropDownMenu, DropDownMenuItem } from '../dropDownMenu'
@@ -11,6 +13,8 @@ import s from './header.module.scss'
 
 export const Header = () => {
   const { data: me } = useGetMeQuery()
+  const [logOut] = useLogOutMutation()
+  const navigate = useNavigate()
 
   return (
     <header className={s.header}>
@@ -31,13 +35,13 @@ export const Header = () => {
                 </div>
               </div>
             </DropDownMenuItem>
-            <DropDownMenuItem>
+            <DropDownMenuItem onClick={() => navigate('/profile')}>
               <div className={s.menuItem}>
                 <SvgAva />
                 <p>My profile</p>
               </div>
             </DropDownMenuItem>
-            <DropDownMenuItem>
+            <DropDownMenuItem onClick={logOut}>
               <div className={s.menuItem}>
                 <SvgOut />
                 <p>Log out</p>
@@ -46,7 +50,7 @@ export const Header = () => {
           </DropDownMenu>
         ) : (
           <Button as="a" href="/login">
-            Sing In
+            Sign In
           </Button>
         )}
       </div>

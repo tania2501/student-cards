@@ -35,7 +35,7 @@ export const SignIn = (props: SubmitProps) => {
   return (
     <Card className={s.paper}>
       <Typography variant="large" className={s.title}>
-        Sing In
+        Sign In
       </Typography>
       <form onSubmit={handleSubmit(props.onSubmit)}>
         <DevTool control={control} />
@@ -62,7 +62,7 @@ export const SignIn = (props: SubmitProps) => {
           Forgot Password?
         </Typography>
         <Button variant="primary" type="submit" fullWidth>
-          Sing In
+          Sign In
         </Button>
       </form>
       <Typography variant="body2" className={s.text}>

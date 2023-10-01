@@ -7,11 +7,6 @@ import { Typography } from '../typography'
 
 import s from './dropDownMenu.module.scss'
 
-export type MenuItemsType = {
-  icon: JSX.Element
-  text: string
-  email?: string
-}
 type DropDownType = {
   avatar?: string
   userInfo?: {
@@ -28,7 +23,7 @@ export const DropDownMenu: FC<DropDownType> = ({ userInfo, avatar, children }) =
   return (
     <div className={s.main}>
       <DropdownMenu.Root open={open} onOpenChange={setOpen}>
-        <DropdownMenu.Trigger>
+        <DropdownMenu.Trigger asChild>
           <button className={s.IconButton} aria-label="Customize options">
             <Typography variant="subtitle">{userInfo?.name}</Typography>
             <Avatar src={avatar ? avatar : ''} />
@@ -50,9 +45,13 @@ export const DropDownMenu: FC<DropDownType> = ({ userInfo, avatar, children }) =
   )
 }
 
-export const DropDownMenuItem: FC<DropdownMenu.DropdownMenuProps> = ({ children, ...props }) => {
+type DropDownItem = DropdownMenu.DropdownMenuItemProps & {
+  onClickItem?: () => void
+}
+
+export const DropDownMenuItem: FC<DropDownItem> = ({ children, onClickItem, ...props }) => {
   return (
-    <DropdownMenu.Item className={s.DropdownMenuItem} {...props}>
+    <DropdownMenu.Item className={s.DropdownMenuItem} onClick={onClickItem} {...props}>
       <div className={s.DropdownMenuItem}>{children}</div>
     </DropdownMenu.Item>
   )

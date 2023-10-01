@@ -69,7 +69,11 @@ export const Decks = () => {
 
   return (
     <div>
-      <div className={s.header}>
+      <div className={s.caption}>
+        <Typography variant={'large'}>Packs list</Typography>
+        <Button variant="primary">Add New Pack</Button>
+      </div>
+      <div className={s.instruments}>
         <Input type="search" placeholder="Input search" value={search} onValueChange={setSearch} />
         <div>
           <Typography as="p" variant="body2" className={s.title}>
