@@ -31,6 +31,10 @@ const publicRoutes: RouteObject[] = [
     path: '/check-email',
     element: <></>,
   },
+  {
+    path: '/set-new-password',
+    element: <></>,
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
