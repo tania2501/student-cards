@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '../base-query-with-reauth'
 
-import { LoginResponse, LoginType, RecoverPassword, UserType } from './types'
+import { LoginResponse, LoginType, RecoverPassword, ResetPassword, UserType } from './types'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -46,7 +46,17 @@ export const authApi = createApi({
           html: message,
         },
       }),
-      invalidatesTags: ['Me'],
+    }),
+    resetPassword: builder.mutation<void, ResetPassword>({
+      query: data => {
+        const { token, password } = data
+
+        return {
+          url: `auth/reset-password/${token}`,
+          method: 'POST',
+          body: { password },
+        }
+      },
     }),
     logOut: builder.mutation<any, void>({
       query: data => ({
@@ -71,7 +81,7 @@ export const authApi = createApi({
   }),
 })
 const message =
-  '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>'
+  '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/set-new-password/##token##">here</a> to recover your password</p>'
 
 export const {
   useGetMeQuery,

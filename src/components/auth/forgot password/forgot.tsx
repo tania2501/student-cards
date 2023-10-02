@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
 import { Button } from '../../ui/button'
@@ -48,7 +49,7 @@ export const ForgotPassword = (props: SubmitProps) => {
       <Typography variant="body2" className={s.text}>
         Did you remember your password?
       </Typography>
-      <Typography variant="link1" className={s.Link}>
+      <Typography as={Link} to="/login" variant="link1" className={s.Link}>
         Try logging in
       </Typography>
     </Card>

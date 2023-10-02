@@ -7,8 +7,10 @@ import { RecoverPassword } from '../../services/auth/types'
 export const ForgotPasswordPage = () => {
   const [recover] = useForgotPasswordMutation()
   const navigate = useNavigate()
-  const onSubmit = (data: RecoverPassword) => {
-    return recover(data).then(() => navigate('/check-email'))
+  const onSubmit = async (data: RecoverPassword) => {
+    await recover(data)
+
+    return navigate(`/check-email?email=${data.email}`)
   }
 
   return <ForgotPassword onSubmit={onSubmit} />
