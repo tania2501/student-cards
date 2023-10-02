@@ -90,4 +90,5 @@ export const {
   useLogOutMutation,
   useChangeNameMutation,
   useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = authApi

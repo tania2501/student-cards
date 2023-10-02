@@ -7,10 +7,12 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from './components/ui/header'
+import { CheckEmailPage } from './pages/check-email/check-email'
 import { Decks } from './pages/decks/decks'
 import { ForgotPasswordPage } from './pages/forgot-password/forgot-password'
 import { LoginPage } from './pages/login'
 import { Profile } from './pages/profile'
+import { ResetPasswordPage } from './pages/reset-password/reset-password'
 import { SignUpPage } from './pages/signup'
 import { useGetMeQuery } from './services/auth/auth.service'
 
@@ -29,11 +31,11 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/check-email',
-    element: <></>,
+    element: <CheckEmailPage />,
   },
   {
-    path: '/set-new-password',
-    element: <></>,
+    path: '/set-new-password/:token',
+    element: <ResetPasswordPage />,
   },
 ]
 
