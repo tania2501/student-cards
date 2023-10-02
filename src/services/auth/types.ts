@@ -21,3 +21,9 @@ export type ProfileData = {
 export type LoginResponse = {
   accessToken: string
 }
+
+export type RecoverPassword = {
+  html?: string
+  email: string
+  subject?: string
+}

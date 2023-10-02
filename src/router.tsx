@@ -8,6 +8,7 @@ import {
 
 import { Layout } from './components/ui/header'
 import { Decks } from './pages/decks/decks'
+import { ForgotPasswordPage } from './pages/forgot-password/forgot-password'
 import { LoginPage } from './pages/login'
 import { Profile } from './pages/profile'
 import { SignUpPage } from './pages/signup'
@@ -24,6 +25,10 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/forgot-password',
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: '/check-email',
     element: <></>,
   },
 ]
