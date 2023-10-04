@@ -22,7 +22,7 @@ const publicRoutes: RouteObject[] = [
     element: <LoginPage />,
   },
   {
-    path: '/singup',
+    path: '/signup',
     element: <SignUpPage />,
   },
   {

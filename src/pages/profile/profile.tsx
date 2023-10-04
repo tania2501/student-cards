@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { SvgEdit, SvgOut } from '../../assets/icons/menu-icons'
 import { Avatar } from '../../components/ui/avatar'
 import { Button } from '../../components/ui/button'
@@ -77,6 +79,9 @@ export const Profile = () => {
           </Typography>
           <Button variant="secondary" onClick={handleLogout}>
             <SvgOut /> Logout
+          </Button>
+          <Button as={Link} to={'/'} variant="link" className={s.linkButton} fullWidth>
+            Back to Packs List &#8594;
           </Button>
         </div>
       )}

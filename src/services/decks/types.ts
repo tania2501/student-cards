@@ -27,7 +27,7 @@ export type Deck = {
   cardsCount: number
 }
 
-export type CreateDeckInput = FormData // { cover: File, name: string, isPrivate: boolean }
+export type CreateDeckInput = FormData
 export type DeleteDeckInput = { deckId: Deck['id'] } // { deckId: string }
 
 export type Pagination = {

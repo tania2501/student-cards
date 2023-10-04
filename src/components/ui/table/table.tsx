@@ -2,7 +2,7 @@ import { ComponentProps, FC } from 'react'
 
 import clsx from 'clsx'
 
-import { SvgArrowDown } from '../../../assets/icons/arrow'
+import { SvgArrowDown, SvgArrowTop } from '../../../assets/icons/arrow'
 
 import s from './table.module.scss'
 
@@ -83,14 +83,16 @@ export const Header: FC<
       direction: sort?.direction === 'asc' ? 'desc' : 'asc',
     })
   }
+  const abc = sort?.direction === 'asc' ? <SvgArrowDown /> : <SvgArrowTop />
 
   return (
     <Head {...restProps}>
       <Row>
         {columns.map(({ title, key, sortable }) => (
           <HeaderCell key={key} onClick={handleSort(key, sortable)} sortable={sortable}>
-            {title}
-            {sort?.key === key ? <SvgArrowDown /> : ''}
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {title} {sort?.key === key ? abc : ''}
+            </div>
           </HeaderCell>
         ))}
       </Row>
