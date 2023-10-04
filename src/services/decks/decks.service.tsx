@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '../base-query-with-reauth'
 
-import { Paginated, Deck, PaginatedArgs, GetDecksParams } from './types'
+import { Paginated, Deck, PaginatedArgs, GetDecksParams, CreateDeckInput } from './types'
 
 export const decksApi = createApi({
   reducerPath: 'decksApi',
@@ -21,6 +21,13 @@ export const decksApi = createApi({
       },
       providesTags: ['Decks'],
     }),
+    createDecks: builder.mutation<Deck, CreateDeckInput>({
+      query: data => ({
+        url: 'decks',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 })
-export const { useGetDecksQuery } = decksApi
+export const { useGetDecksQuery, useCreateDecksMutation } = decksApi

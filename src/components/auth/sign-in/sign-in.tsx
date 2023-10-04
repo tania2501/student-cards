@@ -68,7 +68,7 @@ export const SignIn = (props: SubmitProps) => {
       <Typography variant="body2" className={s.text}>
         Don't have an account?
       </Typography>
-      <Typography as={Link} to={'/singup'} variant="link1" className={s.Link}>
+      <Typography as={Link} to={'/signup'} variant="link1" className={s.Link}>
         Sign Up
       </Typography>
     </Card>
