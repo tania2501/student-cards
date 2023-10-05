@@ -48,6 +48,10 @@ const privateRoutes: RouteObject[] = [
     path: '/profile',
     element: <Profile />,
   },
+  {
+    path: '/card/:id',
+    element: <></>,
+  },
 ]
 
 const router = createBrowserRouter([

@@ -2,16 +2,16 @@ import { useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { SvgImgIcon } from '../../assets/icons/img-icon'
 import { SvgDelete, SvgEdit, SvgPlay } from '../../assets/icons/menu-icons'
 import { Button } from '../../components/ui/button'
-import { Modal } from '../../components/ui/card'
 import { ControlledCheckbox } from '../../components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '../../components/ui/controlled/controlled-checkbox/controlled-input'
 import { Input } from '../../components/ui/input'
+import { Modal } from '../../components/ui/modal/modal'
 import { Pagination } from '../../components/ui/pagination'
 import { MainSelect } from '../../components/ui/select'
 import { MainSlider } from '../../components/ui/slider'
@@ -75,23 +75,21 @@ export const Decks = () => {
     orderBy: sortString,
     currentPage: page,
   })
-
+  const navigate = useNavigate()
   const MAX_FILE_SIZE = 500000
   const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
   const schema = z.object({
     name: z.string().min(3, { message: 'Must be exactly 3 characters long' }),
     isPrivate: z.boolean().default(false),
-    cover:
-      typeof window === 'undefined'
-        ? z.any()
-        : z
-            .instanceof(File)
-            .refine(file => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
-            .refine(
-              file => ACCEPTED_IMAGE_TYPES.includes(file?.type),
-              'Only .jpg, .jpeg, .png and .webp formats are supported.'
-            ),
+    cover: z
+      .instanceof(File)
+      .refine(file => file.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
+      .refine(
+        file => file && ACCEPTED_IMAGE_TYPES.includes(file.type),
+        'Only .jpg, .jpeg, .png and .webp formats are supported.'
+      )
+      .optional(),
   })
 
   type CreateDeckFormData = z.infer<typeof schema>
@@ -102,13 +100,13 @@ export const Decks = () => {
     defaultValues: {
       name: '',
       isPrivate: false,
-      cover: null,
+      cover: undefined,
     },
   })
   const onChange = handleSubmit((data: CreateDeckFormData) => {
     const imgFile = new FormData()
 
-    imgFile.append('cover', data.cover!)
+    data.cover && imgFile.append('cover', data.cover)
     imgFile.append('name', data.name)
     imgFile.append('isPrivate', JSON.stringify(data.isPrivate))
 
@@ -119,53 +117,45 @@ export const Decks = () => {
   return (
     <div>
       {showModal && (
-        <div className={s.modalWindow}>
-          <div className={s.overlay}></div>
-          <Modal className={s.main}>
-            <div className={s.modalTitle}>
-              <Typography variant="h2">Add New Pack</Typography>
-              <div onClick={() => setShowModal(false)} style={{ cursor: 'pointer' }}>
-                X
-              </div>
-            </div>
-            <form onSubmit={onChange} className={s.form}>
-              <div>
-                <ControlledInput
-                  name="cover"
-                  control={control}
-                  type="file"
-                  id="file-cover"
-                  style={{ display: 'none' }}
-                />
-                <Button
-                  as={'label'}
-                  variant="secondary"
-                  fullWidth
-                  htmlFor="file-cover"
-                  className={s.fileButton}
-                >
-                  <SvgImgIcon /> Add Cover Image
-                </Button>
-              </div>
+        <Modal setShowModal={setShowModal}>
+          <form onSubmit={onChange} className={s.form}>
+            <div>
               <ControlledInput
+                required={false}
+                name="cover"
                 control={control}
-                name={'name'}
-                id="packs-name"
-                label="Name pack"
-                placeholder="Name"
+                type="file"
+                id="file-cover"
+                style={{ display: 'none' }}
               />
-              <ControlledCheckbox label="Private pack" name="isPrivate" control={control} />
-              <div className={s.modalButton}>
-                <Button variant="secondary" onClick={() => setShowModal(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" variant="primary">
-                  Add New Pack
-                </Button>
-              </div>
-            </form>
-          </Modal>
-        </div>
+              <Button
+                as={'label'}
+                variant="secondary"
+                fullWidth
+                htmlFor="file-cover"
+                className={s.fileButton}
+              >
+                <SvgImgIcon /> Add Cover Image
+              </Button>
+            </div>
+            <ControlledInput
+              control={control}
+              name={'name'}
+              id="packs-name"
+              label="Name pack"
+              placeholder="Name"
+            />
+            <ControlledCheckbox label="Private pack" name="isPrivate" control={control} />
+            <div className={s.modalButton}>
+              <Button variant="secondary" onClick={() => setShowModal(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="primary">
+                Add New Pack
+              </Button>
+            </div>
+          </form>
+        </Modal>
       )}
       <div className={s.caption}>
         <Typography variant={'large'}>Packs list</Typography>
@@ -224,15 +214,23 @@ export const Decks = () => {
               <Table.Cell>{new Date(deck.updated).toLocaleDateString('da-DK')}</Table.Cell>
               <Table.Cell>{deck.author.name}</Table.Cell>
               <Table.Cell>
-                <button>
-                  <SvgPlay />
-                </button>
-                <button>
-                  <SvgEdit />
-                </button>
-                <button>
-                  <SvgDelete />
-                </button>
+                {showMyDecks ? (
+                  <>
+                    <button>
+                      <SvgPlay onClick={() => navigate(`/cards/:${deck.id}`)} />
+                    </button>
+                    <button>
+                      <SvgEdit />
+                    </button>
+                    <button>
+                      <SvgDelete />
+                    </button>
+                  </>
+                ) : (
+                  <button>
+                    <SvgPlay onClick={() => navigate(`/cards/:${deck.id}`)} />
+                  </button>
+                )}
               </Table.Cell>
             </Table.Row>
           ))}
