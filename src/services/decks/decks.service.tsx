@@ -28,6 +28,16 @@ export const decksApi = createApi({
         body: data,
       }),
     }),
+    deleteDecks: builder.mutation<Deck, { id: string }>({
+      query: data => {
+        const { id } = data
+
+        return {
+          url: `decks/${id}`,
+          method: 'DELETE',
+        }
+      },
+    }),
   }),
 })
-export const { useGetDecksQuery, useCreateDecksMutation } = decksApi
+export const { useGetDecksQuery, useCreateDecksMutation, useDeleteDecksMutation } = decksApi
