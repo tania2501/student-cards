@@ -9,8 +9,8 @@ export const SvgAva = () => (
   </svg>
 )
 
-export const SvgOut = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none">
+export const SvgOut: FC<ComponentProps<'svg'>> = props => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" {...props}>
     <path
       fill="#fff"
       d="M4.667 4a.667.667 0 1 0 0-1.333H3.333a.667.667 0 0 0-.666.667v9.333a.667.667 0 0 0 .666.667h1.334a.667.667 0 1 0 0-1.333H4V4h.667ZM13.88 7.614 12 4.947a.667.667 0 1 0-1.087.774l1.147 1.613H6.667a.667.667 0 0 0 0 1.333H12l-1.2 1.6a.67.67 0 0 0 .133.934.667.667 0 0 0 .934-.134l2-2.666a.667.667 0 0 0 .013-.787Z"
@@ -18,8 +18,8 @@ export const SvgOut = () => (
   </svg>
 )
 
-export const SvgPlay = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none">
+export const SvgPlay: FC<ComponentProps<'svg'>> = props => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" {...props}>
     <path
       fill="#fff"
       d="M8 1.334a6.667 6.667 0 1 0 0 13.334A6.667 6.667 0 0 0 8 1.334Zm0 12A5.333 5.333 0 1 1 8 2.67a5.333 5.333 0 0 1 0 10.665Z"
@@ -40,8 +40,8 @@ export const SvgEdit: FC<ComponentProps<'svg'>> = props => (
   </svg>
 )
 
-export const SvgDelete = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none">
+export const SvgDelete: FC<ComponentProps<'svg'>> = props => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" {...props}>
     <path
       fill="#fff"
       d="M14 4.001h-3.333V2.888A1.614 1.614 0 0 0 9 1.334H7a1.613 1.613 0 0 0-1.667 1.554V4H2a.667.667 0 0 0 0 1.333h.667v7.334a2 2 0 0 0 2 2h6.666a2 2 0 0 0 2-2V5.334H14a.667.667 0 1 0 0-1.333ZM6.667 2.888c0-.107.14-.22.333-.22h2c.193 0 .333.113.333.22V4H6.667V2.888ZM12 12.668a.667.667 0 0 1-.667.666H4.667A.667.667 0 0 1 4 12.668V5.334h8v7.334Z"
