@@ -17,6 +17,7 @@ import { useGetDecksQuery } from '../../services/decks/decks.service'
 
 import { CreateDecksForm } from './create-decks-form/create-decks-form'
 import s from './decks.module.scss'
+import { DeletePack } from './delete-pack/delete-pack'
 
 export const Decks = () => {
   const columns: Column[] = [
@@ -49,10 +50,12 @@ export const Decks = () => {
   const [search, setSearch] = useState('')
   const [showMyDecks, setShowMyDecks] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [range, setRange] = useState([0, 100])
   const sortString = sort ? `${sort.key}-${sort.direction}` : null
   const [pageCount, setPageCount] = useState(JSON.stringify(10))
   const [page, setPage] = useState<number>(1)
+  const [deletePackInfo, setDeletePackInfo] = useState({ id: '', name: '' })
   const resetFilters = () => {
     setSearch('')
     setShowMyDecks(false)
@@ -70,12 +73,25 @@ export const Decks = () => {
     currentPage: page,
   })
   const navigate = useNavigate()
+  const deletePack = (id: string, name: string) => {
+    setShowDeleteModal(true)
+    setDeletePackInfo({ id: id, name: name })
+  }
 
   return (
     <div>
       {showModal && (
-        <Modal setShowModal={setShowModal}>
+        <Modal setShowModal={setShowModal} title={'Add new pack'}>
           <CreateDecksForm setShowModal={setShowModal} />
+        </Modal>
+      )}
+      {showDeleteModal && (
+        <Modal setShowModal={setShowDeleteModal} title="Delete Pack">
+          <DeletePack
+            setShowModal={setShowDeleteModal}
+            id={deletePackInfo.id}
+            name={deletePackInfo.name}
+          />
         </Modal>
       )}
       <div className={s.caption}>
@@ -144,7 +160,7 @@ export const Decks = () => {
                       <SvgEdit />
                     </button>
                     <button>
-                      <SvgDelete />
+                      <SvgDelete onClick={() => deletePack(deck.id, deck.name)} />
                     </button>
                   </>
                 ) : (

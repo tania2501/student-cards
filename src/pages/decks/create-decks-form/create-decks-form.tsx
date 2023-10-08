@@ -57,7 +57,7 @@ export const CreateDecksForm: FC<ModalType> = ({ setShowModal }) => {
 
   return (
     <form onSubmit={onChange} className={s.form}>
-      <div>
+      <div style={{ textAlign: 'center', marginTop: '24px' }}>
         <ControlledInput
           control={control}
           name="cover"
