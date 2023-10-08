@@ -31,7 +31,7 @@
 
 
 .form {
-  padding: 24px;
+  padding: 0 24px 24px;
 }
 
 .modalButton {
@@ -41,5 +41,10 @@
 
 .fileButton {
   margin: 24px 0;
+}
+
+.deletePackText {
+  margin: 18px 0;
+  line-height: var(--line-height-m);
 }
 

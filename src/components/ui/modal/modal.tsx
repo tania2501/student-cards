@@ -8,15 +8,16 @@ import s from './modal.module.scss'
 }
 type ModalProps = ComponentProps<'div'> & {
   setShowModal: (show: boolean) => void
+  title: string
 }
 
-export const Modal: FC<ModalProps> = ({ setShowModal, children }) => {
+export const Modal: FC<ModalProps> = ({ setShowModal, title, children }) => {
   return (
     <div className={s.modalWindow}>
       <div className={s.overlay}></div>
       <div className={s.main}>
         <div className={s.modalTitle}>
-          <Typography variant="h2">Add New Pack</Typography>
+          <Typography variant="h2">{title}</Typography>
           <div onClick={() => setShowModal(false)} style={{ cursor: 'pointer' }}>
             X
           </div>

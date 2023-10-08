@@ -27,6 +27,7 @@ export const decksApi = createApi({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['Decks'],
     }),
     deleteDecks: builder.mutation<Deck, { id: string }>({
       query: data => {
@@ -37,6 +38,7 @@ export const decksApi = createApi({
           method: 'DELETE',
         }
       },
+      invalidatesTags: ['Decks'],
     }),
   }),
 })
