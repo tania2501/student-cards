@@ -23,8 +23,8 @@ export const Head: FC<ComponentProps<'thead'>> = ({ className, ...rest }) => {
 export const Body: FC<ComponentProps<'tbody'>> = props => {
   return <tbody {...props} />
 }
-export const Row: FC<ComponentProps<'tr'>> = props => {
-  return <tr {...props} />
+export const Row: FC<ComponentProps<'tr'>> = ({ className, ...rest }) => {
+  return <tr className={className} {...rest} />
 }
 
 export type HeadCellProps = ComponentProps<'th'> & {
@@ -42,12 +42,12 @@ export const HeaderCell: FC<HeadCellProps> = ({ className, children, sortable, .
     </th>
   )
 }
-export const Cell: FC<ComponentProps<'td'>> = props => {
+export const Cell: FC<ComponentProps<'td'>> = ({ className, ...rest }) => {
   const classNames = {
-    cell: clsx(props.className, s.tableCell),
+    cell: clsx(className, s.tableCell),
   }
 
-  return <td className={classNames.cell} {...props} />
+  return <td className={classNames.cell} {...rest} />
 }
 
 export type Column = {

@@ -8,18 +8,16 @@ import { SvgImgIcon } from '../../../assets/icons/img-icon'
 import { Button } from '../../../components/ui/button'
 import { ControlledCheckbox } from '../../../components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '../../../components/ui/controlled/controlled-checkbox/controlled-input'
-import { CreateDeckInput, Deck } from '../../../services/decks/types'
+import { useUpdateDecksMutation } from '../../../services/decks/decks.service'
+import { Deck } from '../../../services/decks/types'
 import s from '../decks.module.scss'
 
-type ModalType = {
+type EditDecksType = {
   setShowModal: (show: boolean) => void
-  title: string
-  deck?: Deck
-  decksForm: (data: CreateDeckInput, id?: string) => void
-  cover?: string
+  deck: Deck
 }
 
-export const DecksForm: FC<ModalType> = ({ setShowModal, decksForm, title, deck }) => {
+export const UpdateDecks: FC<EditDecksType> = ({ setShowModal, deck }) => {
   const MAX_FILE_SIZE = 500000
   const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
@@ -36,27 +34,29 @@ export const DecksForm: FC<ModalType> = ({ setShowModal, decksForm, title, deck 
       .optional(),
   })
 
-  type CreateDeckFormData = z.infer<typeof schema>
-
-  const { control, handleSubmit } = useForm<CreateDeckFormData>({
+  type UpdateDeckFormData = z.infer<typeof schema>
+  const [updateDeck] = useUpdateDecksMutation()
+  const { control, handleSubmit } = useForm<UpdateDeckFormData>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues: {
-      name: '',
-      isPrivate: false,
+      name: deck.name,
+      isPrivate: deck.isPrivate,
       cover: undefined,
     },
   })
 
-  const onChange = handleSubmit((data: CreateDeckFormData) => {
-    const imgFile = new FormData()
+  const onChange = handleSubmit((data: UpdateDeckFormData) => {
+    {
+      const imgFile = new FormData()
 
-    data.cover && imgFile.append('cover', data.cover)
-    imgFile.append('name', data.name)
-    imgFile.append('isPrivate', JSON.stringify(data.isPrivate))
+      data.cover && imgFile.append('cover', data.cover)
+      imgFile.append('name', data.name)
+      imgFile.append('isPrivate', JSON.stringify(data.isPrivate))
 
-    decksForm(imgFile)
-    setShowModal(false)
+      updateDeck({ data: imgFile, id: deck.id })
+      setShowModal(false)
+    }
   })
 
   return (
@@ -93,7 +93,7 @@ export const DecksForm: FC<ModalType> = ({ setShowModal, decksForm, title, deck 
           Cancel
         </Button>
         <Button type="submit" variant="primary">
-          {title}
+          Save Changes
         </Button>
       </div>
     </form>

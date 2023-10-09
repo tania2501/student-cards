@@ -29,7 +29,10 @@ export type Deck = {
 
 export type CreateDeckInput = FormData
 export type DeleteDeckInput = { deckId: Deck['id'] } // { deckId: string }
-
+export type UpdateDecks = {
+  data: FormData
+  id: string
+}
 export type Pagination = {
   totalPages: number
   currentPage: number

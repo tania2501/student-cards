@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
+import { Deck } from '../../../../services/decks/types'
 import { Input, InputProps } from '../../input'
 
 import icon from '@/assets/icons/8f77a51611a552cfd42b1ec2f4c1e4c6.png'
@@ -10,6 +11,7 @@ export type ControlledInputProps<TInputValues extends FieldValues> = {
   name: FieldPath<TInputValues>
   control: Control<TInputValues>
   id: string
+  deck?: Deck
 } & Omit<InputProps, 'onChange' | 'value' | 'id'>
 
 export const ControlledInput = <TInputValues extends FieldValues>(
@@ -22,7 +24,7 @@ export const ControlledInput = <TInputValues extends FieldValues>(
     name: props.name,
     control: props.control,
   })
-  const [img, setImg] = useState<string | null>(null)
+  const [img, setImg] = useState<string | null>(props.deck?.cover || null)
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     if (props.id === 'file-cover' && e.target.files) {
       onChange(e.target.files[0])
