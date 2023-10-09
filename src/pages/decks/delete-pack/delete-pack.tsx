@@ -3,15 +3,15 @@ import { FC } from 'react'
 import { Button } from '../../../components/ui/button'
 import { Typography } from '../../../components/ui/typography'
 import { useDeleteDecksMutation } from '../../../services/decks/decks.service'
+import { Deck } from '../../../services/decks/types'
 import s from '../decks.module.scss'
 
 type DeletePackType = {
   setShowModal: (show: boolean) => void
-  id: string
-  name: string
+  deck?: Deck
 }
 
-export const DeletePack: FC<DeletePackType> = ({ setShowModal, id, name }) => {
+export const DeletePack: FC<DeletePackType> = ({ setShowModal, deck }) => {
   const [deletePack] = useDeleteDecksMutation()
 
   const onDelete = (id: string) => {
@@ -22,14 +22,16 @@ export const DeletePack: FC<DeletePackType> = ({ setShowModal, id, name }) => {
   return (
     <div className={s.form}>
       <div className={s.deletePackText}>
-        <Typography variant={'subtitle'}>Do you really want to remove {name} pack?</Typography>
+        <Typography variant={'subtitle'}>
+          Do you really want to remove {deck?.name} pack?
+        </Typography>
         <Typography variant={'subtitle'}>All cards will be deleted.</Typography>
       </div>
       <div className={s.modalButton}>
         <Button variant="secondary" onClick={() => setShowModal(false)}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={() => onDelete(id)}>
+        <Button variant="primary" onClick={() => onDelete(deck?.id!)}>
           Delete Pack
         </Button>
       </div>

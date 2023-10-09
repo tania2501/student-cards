@@ -13,11 +13,13 @@ import { Column, Sort, Table } from '../../components/ui/table'
 import { CardsTabs } from '../../components/ui/tabs'
 import { Typography } from '../../components/ui/typography'
 import { useGetMeQuery } from '../../services/auth/auth.service'
-import { useGetDecksQuery } from '../../services/decks/decks.service'
+import { useCreateDecksMutation, useGetDecksQuery } from '../../services/decks/decks.service'
+import { Deck } from '../../services/decks/types'
 
-import { CreateDecksForm } from './create-decks-form/create-decks-form'
+import { DecksForm } from './create-decks-form/create-decks-form'
 import s from './decks.module.scss'
 import { DeletePack } from './delete-pack/delete-pack'
+import { UpdateDecks } from './update-decks/update-decks'
 
 export const Decks = () => {
   const columns: Column[] = [
@@ -49,13 +51,14 @@ export const Decks = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'asc' })
   const [search, setSearch] = useState('')
   const [showMyDecks, setShowMyDecks] = useState(false)
-  const [showModal, setShowModal] = useState(false)
+  const [showCreateDeckModal, setShowCreateDeckModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const [range, setRange] = useState([0, 100])
   const sortString = sort ? `${sort.key}-${sort.direction}` : null
   const [pageCount, setPageCount] = useState(JSON.stringify(10))
   const [page, setPage] = useState<number>(1)
-  const [deletePackInfo, setDeletePackInfo] = useState({ id: '', name: '' })
+
   const resetFilters = () => {
     setSearch('')
     setShowMyDecks(false)
@@ -63,6 +66,7 @@ export const Decks = () => {
   }
 
   const { data: user } = useGetMeQuery()
+  const [createDecks] = useCreateDecksMutation()
   const { data: decks } = useGetDecksQuery({
     itemsPerPage: +pageCount,
     name: search,
@@ -72,31 +76,41 @@ export const Decks = () => {
     orderBy: sortString,
     currentPage: page,
   })
+  const [packInfo, setPackInfo] = useState<Deck>(decks?.items[0]!)
   const navigate = useNavigate()
-  const deletePack = (id: string, name: string) => {
+  const deletePack = (data: Deck) => {
     setShowDeleteModal(true)
-    setDeletePackInfo({ id: id, name: name })
+    setPackInfo(data)
+  }
+  const editPack = (data: Deck) => {
+    setShowEditModal(true)
+    setPackInfo(data)
   }
 
   return (
     <div>
-      {showModal && (
-        <Modal setShowModal={setShowModal} title={'Add new pack'}>
-          <CreateDecksForm setShowModal={setShowModal} />
+      {showCreateDeckModal && (
+        <Modal setShowModal={setShowCreateDeckModal} title={'Add new pack'}>
+          <DecksForm
+            setShowModal={setShowCreateDeckModal}
+            decksForm={createDecks}
+            title="Add New Pack"
+          />
         </Modal>
       )}
       {showDeleteModal && (
         <Modal setShowModal={setShowDeleteModal} title="Delete Pack">
-          <DeletePack
-            setShowModal={setShowDeleteModal}
-            id={deletePackInfo.id}
-            name={deletePackInfo.name}
-          />
+          <DeletePack setShowModal={setShowDeleteModal} deck={packInfo} />
+        </Modal>
+      )}
+      {showEditModal && (
+        <Modal setShowModal={setShowEditModal} title="Edit Pack">
+          <UpdateDecks deck={packInfo} setShowModal={setShowEditModal} />
         </Modal>
       )}
       <div className={s.caption}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button variant="primary" onClick={() => setShowModal(!showModal)}>
+        <Button variant="primary" onClick={() => setShowCreateDeckModal(!showCreateDeckModal)}>
           Add New Pack
         </Button>
       </div>
@@ -150,17 +164,17 @@ export const Decks = () => {
               <Table.Cell>{deck.cardsCount}</Table.Cell>
               <Table.Cell>{new Date(deck.updated).toLocaleDateString('da-DK')}</Table.Cell>
               <Table.Cell>{deck.author.name}</Table.Cell>
-              <Table.Cell>
+              <Table.Cell className={s.svgButtons}>
                 {showMyDecks ? (
                   <>
                     <button>
                       <SvgPlay onClick={() => navigate(`/cards/:${deck.id}`)} />
                     </button>
                     <button>
-                      <SvgEdit />
+                      <SvgEdit onClick={() => editPack(deck)} />
                     </button>
                     <button>
-                      <SvgDelete onClick={() => deletePack(deck.id, deck.name)} />
+                      <SvgDelete onClick={() => deletePack(deck)} />
                     </button>
                   </>
                 ) : (
