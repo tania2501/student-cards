@@ -28,6 +28,17 @@ export const decksApi = createApi({
       },
       providesTags: ['Decks'],
     }),
+    getDecksById: builder.query<Deck, { id: string }>({
+      query: params => {
+        const { id, ...rest } = params
+
+        return {
+          url: `decks/${id}`,
+          params: rest ?? undefined,
+        }
+      },
+      providesTags: ['Decks'],
+    }),
     createDecks: builder.mutation<Deck, CreateDeckInput>({
       query: data => ({
         url: 'decks',
@@ -66,4 +77,5 @@ export const {
   useCreateDecksMutation,
   useDeleteDecksMutation,
   useUpdateDecksMutation,
+  useGetDecksByIdQuery,
 } = decksApi

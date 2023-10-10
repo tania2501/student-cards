@@ -77,7 +77,7 @@ export const UpdateDecks: FC<EditDecksType> = ({ setShowModal, deck }) => {
           htmlFor="file-cover"
           className={s.fileButton}
         >
-          <SvgImgIcon /> Add Cover Image
+          <SvgImgIcon /> Change Cover Image
         </Button>
       </div>
       <ControlledInput

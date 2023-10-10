@@ -154,7 +154,7 @@ export const Decks = () => {
                   <Typography
                     variant="body2"
                     as={Link}
-                    to={'/cards/id'}
+                    to={`/cards/${deck.id}`}
                     className={s.cardsPackName}
                   >
                     {deck.name}
@@ -179,7 +179,7 @@ export const Decks = () => {
                   </>
                 ) : (
                   <button>
-                    <SvgPlay onClick={() => navigate(`/cards/:${deck.id}`)} />
+                    <SvgPlay onClick={() => navigate(`/cards/${deck.id}`)} />
                   </button>
                 )}
               </Table.Cell>
