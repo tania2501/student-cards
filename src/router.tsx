@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from './components/ui/header'
+import { CardPage } from './pages/card/card'
 import { CheckEmailPage } from './pages/check-email/check-email'
 import { Decks } from './pages/decks/decks'
 import { ForgotPasswordPage } from './pages/forgot-password/forgot-password'
@@ -49,8 +50,8 @@ const privateRoutes: RouteObject[] = [
     element: <Profile />,
   },
   {
-    path: '/card/:id',
-    element: <></>,
+    path: '/cards/:id',
+    element: <CardPage />,
   },
 ]
 
