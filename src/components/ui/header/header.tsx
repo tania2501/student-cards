@@ -29,7 +29,7 @@ export const Header: FC<HeaderType> = ({ isAuth, logOut, userInfo }) => {
       <div className={s.container}>
         <SvgLogo />
         {isAuth ? (
-          <DropDownMenu userInfo={userInfo} avatar={userInfo?.avatar ?? ava}>
+          <DropDownMenu info={userInfo}>
             <DropDownMenuItem>
               <div className={s.menuItem}>
                 <Avatar src={userInfo?.avatar ?? ava} />

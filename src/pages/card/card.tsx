@@ -2,8 +2,14 @@ import { useState } from 'react'
 
 import { Link, useParams } from 'react-router-dom'
 
+import { SvgMenuIcon } from '../../assets/icons/iconForDropDown'
+import { SvgDelete, SvgEdit, SvgPlay } from '../../assets/icons/menu-icons'
 import { Button } from '../../components/ui/button'
+import { DropDownMenu, DropDownMenuItem } from '../../components/ui/dropDownMenu'
 import { Input } from '../../components/ui/input'
+import { Modal } from '../../components/ui/modal/modal'
+import { Pagination } from '../../components/ui/pagination'
+import { Rating } from '../../components/ui/rating/rating'
 import { Column, Table } from '../../components/ui/table'
 import { Typography } from '../../components/ui/typography'
 import { useGetMeQuery } from '../../services/auth/auth.service'
@@ -11,6 +17,7 @@ import { useGetCardsQuery } from '../../services/card/card.service'
 import { useGetDecksByIdQuery } from '../../services/decks/decks.service'
 
 import s from './card.module.scss'
+import { CreateCard } from './create-card-form/create-card'
 
 const columns: Column[] = [
   {
@@ -28,16 +35,26 @@ const columns: Column[] = [
     title: 'Grade',
     sortable: true,
   },
+  {
+    key: 'actions',
+    title: '',
+    sortable: false,
+  },
 ]
 
 export const CardPage = () => {
   const [search, setSearch] = useState('')
+  const [page, setPage] = useState<number>(1)
+  const [showCreateCardModal, setShowCreateModal] = useState(false)
   const { id } = useParams<{ id: string }>()
   const { data: deck } = useGetDecksByIdQuery({
     id: id || '',
   })
   const { data: cards } = useGetCardsQuery({
     id: id || '',
+    answer: search,
+    itemsPerPage: 5,
+    currentPage: page,
   })
 
   const { data: me } = useGetMeQuery()
@@ -45,16 +62,55 @@ export const CardPage = () => {
 
   return (
     <div>
-      <Button as={Link} to="/" variant="link">
+      {showCreateCardModal && (
+        <Modal setShowModal={setShowCreateModal} title="Add New Card">
+          <CreateCard id={deck?.id!} setShow={setShowCreateModal} />
+        </Modal>
+      )}
+      <Typography as={Link} to="/" variant="body2" className={s.linkButton}>
         &#8592; Back to packs list
-      </Button>
-      {cards?.items.length! > 0 ? (
+      </Typography>
+      {deck?.cardsCount! > 0 ? (
         <>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: '30px 0' }}>
-            <Typography variant="large">{isMyDeck ? 'My Pack' : 'Friends pack'}</Typography>
-            <Button variant="primary">Learn to Pack</Button>
+          <div>
+            {isMyDeck ? (
+              <>
+                <div className={s.packName}>
+                  <div className={s.menuIcon}>
+                    <Typography variant="large">My Pack</Typography>
+                    <DropDownMenu icon={<SvgMenuIcon />}>
+                      <DropDownMenuItem>
+                        <div className={s.menuIcon}>
+                          <SvgPlay />
+                          <p>Learn</p>
+                        </div>
+                      </DropDownMenuItem>
+                      <DropDownMenuItem>
+                        <div className={s.menuIcon}>
+                          <SvgEdit />
+                          <p>Edit</p>
+                        </div>
+                      </DropDownMenuItem>
+                      <DropDownMenuItem>
+                        <div className={s.menuIcon}>
+                          <SvgDelete />
+                          <p>Delete</p>
+                        </div>
+                      </DropDownMenuItem>
+                    </DropDownMenu>
+                  </div>
+                  <Button variant="primary" onClick={() => setShowCreateModal(true)}>
+                    Add new card
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className={s.packName}>
+                <Typography variant="large">Friends pack</Typography>
+                <Button variant="primary">Learn to Pack</Button>
+              </div>
+            )}
           </div>
-
           <Input
             type="search"
             placeholder="Input search"
@@ -89,26 +145,55 @@ export const CardPage = () => {
                     </div>
                   </Table.Cell>
                   <Table.Cell>{new Date(card.updated).toLocaleDateString('da-DK')}</Table.Cell>
-                  <Table.Cell className={s.svgButtons}>{card.rating}</Table.Cell>
+                  <Table.Cell className={s.svgButtons}>
+                    <Rating value={card.rating} />
+                  </Table.Cell>
+                  <Table.Cell>
+                    {isMyDeck && (
+                      <div>
+                        <button>
+                          <SvgEdit />
+                        </button>
+                        <button>
+                          <SvgDelete />
+                        </button>
+                      </div>
+                    )}
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
           </Table.Root>
+          <Pagination
+            contentPerPage={cards?.pagination.itemsPerPage ?? 1}
+            count={cards?.pagination.totalItems ?? 1}
+            currentPage={cards?.pagination.currentPage ?? 1}
+            setCurrentPage={setPage}
+          />
         </>
       ) : (
         <div>
-          {isMyDeck ? (
-            <div>
-              <Typography variant="large">{deck?.name}</Typography>
-              <Typography>This pack is empty. Click add new card to fill this pack</Typography>
-              <Button variant="primary">Add New Card</Button>
+          <div>
+            <Typography variant="large" className={s.packName}>
+              {deck?.name}
+            </Typography>
+            <div className={s.packInfo}>
+              <Typography>
+                {isMyDeck
+                  ? 'This pack is empty. Click add new card to fill this pack'
+                  : 'This pack is empty'}
+              </Typography>
+              {isMyDeck && (
+                <Button
+                  variant="primary"
+                  className={s.addCardButton}
+                  onClick={() => setShowCreateModal(true)}
+                >
+                  Add New Card
+                </Button>
+              )}
             </div>
-          ) : (
-            <div>
-              <Typography variant="large">{deck?.name}</Typography>
-              <Typography>This pack is empty</Typography>
-            </div>
-          )}
+          </div>
         </div>
       )}
     </div>

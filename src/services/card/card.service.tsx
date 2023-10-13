@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { baseQueryWithReauth } from '../base-query-with-reauth'
 import { Paginated } from '../decks/types'
 
-import { Card, GetCardsParams } from './types'
+import { Card, CreateCardArg, GetCardsParams } from './types'
 
 export const cardsApi = createApi({
   reducerPath: 'cardsApi',
@@ -21,7 +21,31 @@ export const cardsApi = createApi({
       },
       providesTags: ['Cards'],
     }),
+    createCard: builder.mutation<any, CreateCardArg>({
+      query: params => {
+        const { id, data } = params
+
+        return {
+          url: `decks/${id}/cards`,
+          method: 'POST',
+          body: data,
+        }
+      },
+      invalidatesTags: ['Cards'],
+    }),
+    deleteCard: builder.mutation<any, CreateCardArg>({
+      query: params => {
+        const { id, data } = params
+
+        return {
+          url: `decks/${id}/cards`,
+          method: 'POST',
+          body: data,
+        }
+      },
+      invalidatesTags: ['Cards'],
+    }),
   }),
 })
 
-export const { useGetCardsQuery } = cardsApi
+export const { useGetCardsQuery, useCreateCardMutation } = cardsApi

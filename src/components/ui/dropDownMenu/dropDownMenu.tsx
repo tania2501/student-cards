@@ -7,9 +7,11 @@ import { Typography } from '../typography'
 
 import s from './dropDownMenu.module.scss'
 
+import ava from '@/assets/logo.jpg'
+
 type DropDownType = {
-  avatar?: string
-  userInfo?: {
+  icon?: JSX.Element
+  info?: {
     name: string
     avatar?: string
     email?: string
@@ -17,7 +19,7 @@ type DropDownType = {
   onClick?: () => void
   children?: ReactNode
 }
-export const DropDownMenu: FC<DropDownType> = ({ userInfo, avatar, children }) => {
+export const DropDownMenu: FC<DropDownType> = ({ info, children, icon }) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -25,13 +27,13 @@ export const DropDownMenu: FC<DropDownType> = ({ userInfo, avatar, children }) =
       <DropdownMenu.Root open={open} onOpenChange={setOpen}>
         <DropdownMenu.Trigger asChild>
           <button className={s.IconButton} aria-label="Customize options">
-            <Typography variant="subtitle">{userInfo?.name}</Typography>
-            <Avatar src={avatar ? avatar : ''} />
+            <Typography variant="subtitle">{info?.name}</Typography>
+            {info ? <Avatar src={info ? info.avatar : ava} /> : icon}
           </button>
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal>
-          <DropdownMenu.Content className={s.DropdownMenuContent} sideOffset={5}>
+          <DropdownMenu.Content align="end" className={s.DropdownMenuContent} sideOffset={5}>
             {open && (
               <>
                 <DropdownMenu.Arrow className={s.MenuArrow} />
