@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, forwardRef, useState } from 'react'
+import { Dispatch, FC, SetStateAction, forwardRef, useState } from 'react'
 
 import * as Select from '@radix-ui/react-select'
+import clsx from 'clsx'
 
 import { SvgArrowDown, SvgArrowTop } from '../../../assets/icons/arrow'
 import { Typography } from '../typography'
@@ -11,9 +12,18 @@ type SelectPropsType = {
   onChange?: Dispatch<SetStateAction<string>>
   value: string[]
   defaultValue?: string
+  className?: string
+  style?: React.CSSProperties
 }
 
-export const MainSelect = (props: SelectPropsType) => {
+export const MainSelect: FC<SelectPropsType & Omit<Select.SelectProps, keyof SelectPropsType>> = ({
+  onChange,
+  value,
+  defaultValue,
+  className,
+  style,
+  ...rest
+}) => {
   const [icon, setIcon] = useState<JSX.Element>(<SvgArrowDown />)
   const change = () => {
     if (icon.type.name === 'SvgArrowDown') {
@@ -22,25 +32,30 @@ export const MainSelect = (props: SelectPropsType) => {
       setIcon(<SvgArrowDown />)
     }
   }
+  const classNames = {
+    root: clsx(s.main, className),
+  }
 
   return (
-    <div className={s.main}>
-      <Select.Root onOpenChange={change} onValueChange={props.onChange}>
-        <Select.Trigger className={s.SelectTrigger}>
-          <Select.Value className={s.value} placeholder={props.defaultValue} />
+    <div className={classNames.root}>
+      <Select.Root onOpenChange={change} onValueChange={onChange} {...rest}>
+        <Select.Trigger className={s.SelectTrigger} style={style}>
+          <Select.Value className={s.value} placeholder={defaultValue} />
           <Select.Icon className={s.SelectIcon}>{icon}</Select.Icon>
         </Select.Trigger>
-        <Select.Content position="popper" className={s.SelectContent}>
-          {props.value.map((el, i) => {
-            return (
-              <SelectItem key={i} value={el}>
-                <Typography as="span" variant="body2">
-                  {el}
-                </Typography>
-              </SelectItem>
-            )
-          })}
-        </Select.Content>
+        <Select.Portal>
+          <Select.Content position="popper" className={s.SelectContent}>
+            {value.map((el, i) => {
+              return (
+                <SelectItem key={i} value={el}>
+                  <Typography as="span" variant="body2">
+                    {el}
+                  </Typography>
+                </SelectItem>
+              )
+            })}
+          </Select.Content>
+        </Select.Portal>
       </Select.Root>
     </div>
   )

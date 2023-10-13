@@ -17,9 +17,9 @@ type Story = StoryObj<typeof meta>
 
 export const DropDown: Story = {
   args: {
-    avatar: ava,
-    userInfo: {
+    info: {
       name: 'Tania',
+      avatar: ava,
     },
     children: (
       <>

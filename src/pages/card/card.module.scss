@@ -1,3 +1,45 @@
-.cardsQuestion {
+.cardsQuestion, .linkButton {
   text-decoration: none;
+}
+
+.packName {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+.packInfo {
+  color: var(--color-dark-100);
+  text-align: center;
+}
+
+.addCardButton {
+  margin-top: 30px;
+}
+
+.menuIcon {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 5px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 24px;
+}
+
+.modalButton {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.label {
+  color: var(--color-dark-100);
 }

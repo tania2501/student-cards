@@ -26,21 +26,21 @@ export const ControlledInput = <TInputValues extends FieldValues>(
   })
   const [img, setImg] = useState<string | null>(props.deck?.cover || null)
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    if (props.id === 'file-cover' && e.target.files) {
+    if (props.type === 'file' && e.target.files) {
       onChange(e.target.files[0])
       setImg(URL.createObjectURL(e.target.files[0]))
     } else {
       onChange(e.currentTarget.value)
     }
   }
-  const isImg = props.id === 'file-cover'
+  const isImg = props.type === 'file'
 
   return (
     <>
       {isImg && <img src={img ? img : icon} style={{ maxWidth: '484px', maxHeight: '120px' }} />}
       <Input
         {...props}
-        value={props.id === 'file-cover' ? value?.fileName : value}
+        value={isImg ? value?.fileName : value}
         onChange={onChangeValue}
         name={name}
         onBlur={onBlur}

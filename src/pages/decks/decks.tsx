@@ -202,6 +202,7 @@ export const Decks = () => {
             value={['5', '10', '15', '20']}
             defaultValue={JSON.stringify(decks?.pagination.itemsPerPage) ?? 1}
             onChange={setPageCount}
+            className={s.selectPagination}
           />
           <Typography as="span">на странице</Typography>
         </div>

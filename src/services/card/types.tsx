@@ -22,3 +22,8 @@ export type GetCardsParams = {
   currentPage?: number
   itemsPerPage?: number
 }
+
+export type CreateCardArg = {
+  data: FormData
+  id: string
+}
