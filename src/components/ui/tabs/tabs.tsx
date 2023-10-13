@@ -11,7 +11,7 @@ type TabsType = Tabs.TabsProps & {
 }
 export const CardsTabs: FC<TabsType> = ({ tabsTitle, show, setShow, children, ...rest }) => {
   return (
-    <Tabs.Root defaultValue={tabsTitle[1]} {...rest}>
+    <Tabs.Root {...rest}>
       <Tabs.List className={s.tabList}>
         <Tabs.Trigger
           value={tabsTitle[0]}
