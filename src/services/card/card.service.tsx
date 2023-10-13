@@ -21,6 +21,17 @@ export const cardsApi = createApi({
       },
       providesTags: ['Cards'],
     }),
+    getCardsById: builder.query<Card, { id: string }>({
+      query: params => {
+        const { id, ...rest } = params
+
+        return {
+          url: `cards/${id}`,
+          params: rest ?? undefined,
+        }
+      },
+      providesTags: ['Cards'],
+    }),
     createCard: builder.mutation<any, CreateCardArg>({
       query: params => {
         const { id, data } = params
@@ -33,14 +44,13 @@ export const cardsApi = createApi({
       },
       invalidatesTags: ['Cards'],
     }),
-    deleteCard: builder.mutation<any, CreateCardArg>({
+    deleteCard: builder.mutation<any, { id: string }>({
       query: params => {
-        const { id, data } = params
+        const { id } = params
 
         return {
-          url: `decks/${id}/cards`,
-          method: 'POST',
-          body: data,
+          url: `cards/${id}`,
+          method: 'DELETE',
         }
       },
       invalidatesTags: ['Cards'],
@@ -48,4 +58,9 @@ export const cardsApi = createApi({
   }),
 })
 
-export const { useGetCardsQuery, useCreateCardMutation } = cardsApi
+export const {
+  useGetCardsQuery,
+  useCreateCardMutation,
+  useDeleteCardMutation,
+  useGetCardsByIdQuery,
+} = cardsApi

@@ -14,10 +14,12 @@ import { Column, Table } from '../../components/ui/table'
 import { Typography } from '../../components/ui/typography'
 import { useGetMeQuery } from '../../services/auth/auth.service'
 import { useGetCardsQuery } from '../../services/card/card.service'
+import { Card } from '../../services/card/types'
 import { useGetDecksByIdQuery } from '../../services/decks/decks.service'
 
 import s from './card.module.scss'
 import { CreateCard } from './create-card-form/create-card'
+import { DeleteCard } from './delete-card/delete-card'
 
 const columns: Column[] = [
   {
@@ -46,6 +48,8 @@ export const CardPage = () => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState<number>(1)
   const [showCreateCardModal, setShowCreateModal] = useState(false)
+  const [showDeleteCardModal, setShowDeleteModal] = useState(false)
+  const [cardItem, setCardItem] = useState<Card>({} as Card)
   const { id } = useParams<{ id: string }>()
   const { data: deck } = useGetDecksByIdQuery({
     id: id || '',
@@ -59,6 +63,10 @@ export const CardPage = () => {
 
   const { data: me } = useGetMeQuery()
   const isMyDeck = me?.id === deck?.userId
+  const onDeleteCard = (card: Card) => {
+    setCardItem(card)
+    setShowDeleteModal(true)
+  }
 
   return (
     <div>
@@ -67,7 +75,17 @@ export const CardPage = () => {
           <CreateCard id={deck?.id!} setShow={setShowCreateModal} />
         </Modal>
       )}
-      <Typography as={Link} to="/" variant="body2" className={s.linkButton}>
+      {showDeleteCardModal && (
+        <Modal setShowModal={setShowDeleteModal} title="Delete card">
+          <DeleteCard card={cardItem} setShowModal={setShowDeleteModal} />
+        </Modal>
+      )}
+      <Typography
+        as="button"
+        onClick={() => window.history.back()}
+        variant="body2"
+        className={s.linkButton}
+      >
         &#8592; Back to packs list
       </Typography>
       {deck?.cardsCount! > 0 ? (
@@ -92,7 +110,7 @@ export const CardPage = () => {
                         </div>
                       </DropDownMenuItem>
                       <DropDownMenuItem>
-                        <div className={s.menuIcon}>
+                        <div className={s.menuIcon} onClick={() => {}}>
                           <SvgDelete />
                           <p>Delete</p>
                         </div>
@@ -155,7 +173,7 @@ export const CardPage = () => {
                           <SvgEdit />
                         </button>
                         <button>
-                          <SvgDelete />
+                          <SvgDelete onClick={() => onDeleteCard(card)} />
                         </button>
                       </div>
                     )}
