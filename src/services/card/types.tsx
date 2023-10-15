@@ -5,8 +5,8 @@ export type Card = {
   question: string
   answer: string
   shots: number
-  answerImg: string
-  questionImg: string
+  answerImg: any
+  questionImg: any
   questionVideo: string
   answerVideo: string
   rating: number

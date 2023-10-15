@@ -7,8 +7,8 @@ import { z } from 'zod'
 
 import { Button } from '../../ui/button'
 import { Card } from '../../ui/card'
-import { ControlledCheckbox } from '../../ui/controlled/controlled-checkbox/controlled-checkbox'
-import { ControlledInput } from '../../ui/controlled/controlled-checkbox/controlled-input'
+import { ControlledCheckbox } from '../../ui/controlled/controlled-checkbox'
+import { ControlledInput } from '../../ui/controlled/controlled-input'
 import { Typography } from '../../ui/typography'
 import s from '../auth.module.scss'
 
