@@ -2,8 +2,8 @@ import { FC } from 'react'
 
 import { Button } from '../../../components/ui/button'
 import { Typography } from '../../../components/ui/typography'
-import { useDeleteCardMutation } from '../../../services/card/card.service'
 import { Card } from '../../../services/card/types'
+import { useDeleteCardMutation } from '../../../services/decks/decks.service'
 import s from '../card.module.scss'
 
 type DeleteCardType = {

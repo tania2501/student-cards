@@ -6,8 +6,8 @@ import { z } from 'zod'
 
 import { SvgImgIcon } from '../../../assets/icons/img-icon'
 import { Button } from '../../../components/ui/button'
-import { ControlledCheckbox } from '../../../components/ui/controlled/controlled-checkbox/controlled-checkbox'
-import { ControlledInput } from '../../../components/ui/controlled/controlled-checkbox/controlled-input'
+import { ControlledCheckbox } from '../../../components/ui/controlled/controlled-checkbox'
+import { ControlledInput } from '../../../components/ui/controlled/controlled-input'
 import { useUpdateDecksMutation } from '../../../services/decks/decks.service'
 import { Deck } from '../../../services/decks/types'
 import s from '../decks.module.scss'
@@ -36,7 +36,7 @@ export const UpdateDecks: FC<EditDecksType> = ({ setShowModal, deck }) => {
 
   type UpdateDeckFormData = z.infer<typeof schema>
   const [updateDeck] = useUpdateDecksMutation()
-  const { control, handleSubmit } = useForm<UpdateDeckFormData>({
+  const { control, handleSubmit, resetField } = useForm<UpdateDeckFormData>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues: {
@@ -50,7 +50,7 @@ export const UpdateDecks: FC<EditDecksType> = ({ setShowModal, deck }) => {
     {
       const imgFile = new FormData()
 
-      data.cover && imgFile.append('cover', data.cover)
+      imgFile.append('cover', data.cover ?? '')
       imgFile.append('name', data.name)
       imgFile.append('isPrivate', JSON.stringify(data.isPrivate))
 
@@ -58,11 +58,15 @@ export const UpdateDecks: FC<EditDecksType> = ({ setShowModal, deck }) => {
       setShowModal(false)
     }
   })
+  const resetImg = (name: 'cover') => {
+    resetField(name)
+  }
 
   return (
     <form onSubmit={onChange} className={s.form}>
       <div style={{ textAlign: 'center', marginTop: '24px' }}>
         <ControlledInput
+          resetImg={() => resetImg('cover')}
           deck={deck}
           control={control}
           name="cover"

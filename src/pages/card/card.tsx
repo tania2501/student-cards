@@ -13,13 +13,13 @@ import { Rating } from '../../components/ui/rating/rating'
 import { Column, Table } from '../../components/ui/table'
 import { Typography } from '../../components/ui/typography'
 import { useGetMeQuery } from '../../services/auth/auth.service'
-import { useGetCardsQuery } from '../../services/card/card.service'
 import { Card } from '../../services/card/types'
-import { useGetDecksByIdQuery } from '../../services/decks/decks.service'
+import { useGetCardsQuery, useGetDecksByIdQuery } from '../../services/decks/decks.service'
 
 import s from './card.module.scss'
 import { CreateCard } from './create-card-form/create-card'
 import { DeleteCard } from './delete-card/delete-card'
+import { UpdateCard } from './update-card/update-card'
 
 const columns: Column[] = [
   {
@@ -49,6 +49,7 @@ export const CardPage = () => {
   const [page, setPage] = useState<number>(1)
   const [showCreateCardModal, setShowCreateModal] = useState(false)
   const [showDeleteCardModal, setShowDeleteModal] = useState(false)
+  const [showEditCard, setShowEdtCard] = useState(false)
   const [cardItem, setCardItem] = useState<Card>({} as Card)
   const { id } = useParams<{ id: string }>()
   const { data: deck } = useGetDecksByIdQuery({
@@ -67,6 +68,10 @@ export const CardPage = () => {
     setCardItem(card)
     setShowDeleteModal(true)
   }
+  const onEditCard = (card: Card) => {
+    setCardItem(card)
+    setShowEdtCard(true)
+  }
 
   return (
     <div>
@@ -78,6 +83,11 @@ export const CardPage = () => {
       {showDeleteCardModal && (
         <Modal setShowModal={setShowDeleteModal} title="Delete card">
           <DeleteCard card={cardItem} setShowModal={setShowDeleteModal} />
+        </Modal>
+      )}
+      {showEditCard && (
+        <Modal setShowModal={setShowEdtCard} title="Edit card">
+          <UpdateCard card={cardItem} setShowModal={setShowEdtCard} />
         </Modal>
       )}
       <Typography
@@ -170,7 +180,7 @@ export const CardPage = () => {
                     {isMyDeck && (
                       <div>
                         <button>
-                          <SvgEdit />
+                          <SvgEdit onClick={() => onEditCard(card)} />
                         </button>
                         <button>
                           <SvgDelete onClick={() => onDeleteCard(card)} />

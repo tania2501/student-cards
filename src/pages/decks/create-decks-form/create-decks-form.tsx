@@ -6,8 +6,8 @@ import { z } from 'zod'
 
 import { SvgImgIcon } from '../../../assets/icons/img-icon'
 import { Button } from '../../../components/ui/button'
-import { ControlledCheckbox } from '../../../components/ui/controlled/controlled-checkbox/controlled-checkbox'
-import { ControlledInput } from '../../../components/ui/controlled/controlled-checkbox/controlled-input'
+import { ControlledCheckbox } from '../../../components/ui/controlled/controlled-checkbox'
+import { ControlledInput } from '../../../components/ui/controlled/controlled-input'
 import { CreateDeckInput, Deck } from '../../../services/decks/types'
 import s from '../decks.module.scss'
 

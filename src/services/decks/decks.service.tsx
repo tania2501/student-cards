@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '../base-query-with-reauth'
+import { Card, CreateCardArg, GetCardsParams } from '../card/types'
 
 import {
   Paginated,
@@ -13,7 +14,7 @@ import {
 
 export const decksApi = createApi({
   reducerPath: 'decksApi',
-  tagTypes: ['Decks'],
+  tagTypes: ['Decks', 'Cards', 'Deck', 'Card'],
   baseQuery: baseQueryWithReauth,
   endpoints: builder => ({
     getDecks: builder.query<
@@ -37,7 +38,7 @@ export const decksApi = createApi({
           params: rest ?? undefined,
         }
       },
-      providesTags: ['Decks'],
+      providesTags: ['Deck'],
     }),
     createDecks: builder.mutation<Deck, CreateDeckInput>({
       query: data => ({
@@ -70,12 +71,75 @@ export const decksApi = createApi({
       },
       invalidatesTags: ['Decks'],
     }),
+    createCard: builder.mutation<any, CreateCardArg>({
+      query: params => {
+        const { id, data } = params
+
+        return {
+          url: `decks/${id}/cards`,
+          method: 'POST',
+          body: data,
+        }
+      },
+      invalidatesTags: ['Cards', 'Deck', 'Decks'],
+    }),
+    getCards: builder.query<Paginated<Card>, GetCardsParams>({
+      query: params => {
+        const { id, ...rest } = params
+
+        return {
+          url: `decks/${id}/cards`,
+          params: rest ?? undefined,
+        }
+      },
+      providesTags: ['Cards'],
+    }),
+    getCardsById: builder.query<Card, { id: string }>({
+      query: params => {
+        const { id, ...rest } = params
+
+        return {
+          url: `cards/${id}`,
+          params: rest ?? undefined,
+        }
+      },
+      providesTags: ['Cards'],
+    }),
+    deleteCard: builder.mutation<any, { id: string }>({
+      query: params => {
+        const { id } = params
+
+        return {
+          url: `cards/${id}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: ['Cards', 'Deck', 'Decks'],
+    }),
+    updateCard: builder.mutation<any, CreateCardArg>({
+      query: params => {
+        const { id, data } = params
+
+        return {
+          url: `cards/${id}`,
+          method: 'PATCH',
+          body: data,
+        }
+      },
+      invalidatesTags: ['Cards'],
+    }),
   }),
 })
+
 export const {
   useGetDecksQuery,
   useCreateDecksMutation,
   useDeleteDecksMutation,
   useUpdateDecksMutation,
   useGetDecksByIdQuery,
+  useCreateCardMutation,
+  useDeleteCardMutation,
+  useGetCardsByIdQuery,
+  useGetCardsQuery,
+  useUpdateCardMutation,
 } = decksApi
