@@ -13,7 +13,7 @@ type ModalProps = ComponentProps<'div'> & {
 
 export const Modal: FC<ModalProps> = ({ setShowModal, title, children }) => {
   return (
-    <div className={s.modalWindow}>
+    <>
       <div className={s.overlay}></div>
       <div className={s.main}>
         <div className={s.modalTitle}>
@@ -24,6 +24,6 @@ export const Modal: FC<ModalProps> = ({ setShowModal, title, children }) => {
         </div>
         <>{children}</>
       </div>
-    </div>
+    </>
   )
 }

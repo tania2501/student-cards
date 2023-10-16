@@ -2,10 +2,8 @@ import { useState } from 'react'
 
 import { Link, useParams } from 'react-router-dom'
 
-import { SvgMenuIcon } from '../../assets/icons/iconForDropDown'
-import { SvgDelete, SvgEdit, SvgPlay } from '../../assets/icons/menu-icons'
+import { SvgDelete, SvgEdit } from '../../assets/icons/menu-icons'
 import { Button } from '../../components/ui/button'
-import { DropDownMenu, DropDownMenuItem } from '../../components/ui/dropDownMenu'
 import { Input } from '../../components/ui/input'
 import { Modal } from '../../components/ui/modal/modal'
 import { Pagination } from '../../components/ui/pagination'
@@ -19,6 +17,7 @@ import { useGetCardsQuery, useGetDecksByIdQuery } from '../../services/decks/dec
 import s from './card.module.scss'
 import { CreateCard } from './create-card-form/create-card'
 import { DeleteCard } from './delete-card/delete-card'
+import { DropMenu } from './drop-menu/drop-menu'
 import { UpdateCard } from './update-card/update-card'
 
 const columns: Column[] = [
@@ -47,7 +46,7 @@ const columns: Column[] = [
 export const CardPage = () => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState<number>(1)
-  const [showCreateCardModal, setShowCreateModal] = useState(false)
+  const [showCreateCard, setShowCreateCard] = useState(false)
   const [showDeleteCardModal, setShowDeleteModal] = useState(false)
   const [showEditCard, setShowEdtCard] = useState(false)
   const [cardItem, setCardItem] = useState<Card>({} as Card)
@@ -75,9 +74,9 @@ export const CardPage = () => {
 
   return (
     <div>
-      {showCreateCardModal && (
-        <Modal setShowModal={setShowCreateModal} title="Add New Card">
-          <CreateCard id={deck?.id!} setShow={setShowCreateModal} />
+      {showCreateCard && (
+        <Modal setShowModal={setShowCreateCard} title="Add New Card">
+          <CreateCard id={deck?.id!} setShow={setShowCreateCard} />
         </Modal>
       )}
       {showDeleteCardModal && (
@@ -102,36 +101,17 @@ export const CardPage = () => {
         <>
           <div>
             {isMyDeck ? (
-              <>
-                <div className={s.packName}>
-                  <div className={s.menuIcon}>
-                    <Typography variant="large">My Pack</Typography>
-                    <DropDownMenu icon={<SvgMenuIcon />}>
-                      <DropDownMenuItem>
-                        <div className={s.menuIcon}>
-                          <SvgPlay />
-                          <p>Learn</p>
-                        </div>
-                      </DropDownMenuItem>
-                      <DropDownMenuItem>
-                        <div className={s.menuIcon}>
-                          <SvgEdit />
-                          <p>Edit</p>
-                        </div>
-                      </DropDownMenuItem>
-                      <DropDownMenuItem>
-                        <div className={s.menuIcon} onClick={() => {}}>
-                          <SvgDelete />
-                          <p>Delete</p>
-                        </div>
-                      </DropDownMenuItem>
-                    </DropDownMenu>
-                  </div>
-                  <Button variant="primary" onClick={() => setShowCreateModal(true)}>
-                    Add new card
-                  </Button>
+              <div className={s.packName}>
+                <div className={s.menuIcon}>
+                  <Typography variant="large" className={s.packMenu}>
+                    My Pack
+                  </Typography>
+                  <DropMenu deck={deck!} />
                 </div>
-              </>
+                <Button variant="primary" onClick={() => setShowCreateCard(true)}>
+                  Add new card
+                </Button>
+              </div>
             ) : (
               <div className={s.packName}>
                 <Typography variant="large">Friends pack</Typography>
@@ -215,7 +195,7 @@ export const CardPage = () => {
                 <Button
                   variant="primary"
                   className={s.addCardButton}
-                  onClick={() => setShowCreateModal(true)}
+                  onClick={() => setShowCreateCard(true)}
                 >
                   Add New Card
                 </Button>
