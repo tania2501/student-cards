@@ -101,9 +101,9 @@ export const CardPage = () => {
         <>
           <div>
             {isMyDeck ? (
-              <div className={s.packName}>
-                <div className={s.menuIcon}>
-                  <Typography variant="large" className={s.packMenu}>
+              <div className={s.header}>
+                <div className={s.myPack}>
+                  <Typography variant="large" className={s.packName}>
                     My Pack
                   </Typography>
                   <DropMenu deck={deck!} />
