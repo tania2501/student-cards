@@ -2,7 +2,7 @@
   text-decoration: none;
 }
 
-.packName {
+.header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -49,6 +49,24 @@
   line-height: var(--line-height-m);
 }
 
-.packMenu {
+.myPack {
+  display: flex;
+  align-items: center;
   margin-right: 10px;
+}
+
+.ellipse {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #fff;
+  border-radius: 100%;
+
+  svg {
+    margin-top: 3px;
+    margin-left: 3px;
+  }
+}
+
+.packName {
+  margin-right: 16px;
 }

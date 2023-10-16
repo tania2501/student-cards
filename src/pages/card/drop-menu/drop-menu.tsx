@@ -18,7 +18,7 @@ export const DropMenu: FC<DropMenuType> = ({ deck }) => {
   const [deletePack, setDeletePack] = useState(false)
 
   return (
-    <>
+    <div className={s.ellipse}>
       {edit && (
         <Modal setShowModal={setEdit} title="Edit pack">
           <UpdateDecks setShowModal={setEdit} deck={deck} />
@@ -49,6 +49,6 @@ export const DropMenu: FC<DropMenuType> = ({ deck }) => {
           </div>
         </DropDownMenuItem>
       </DropDownMenu>
-    </>
+    </div>
   )
 }
