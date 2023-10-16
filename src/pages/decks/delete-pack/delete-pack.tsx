@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import { Button } from '../../../components/ui/button'
 import { Typography } from '../../../components/ui/typography'
 import { useDeleteDecksMutation } from '../../../services/decks/decks.service'
@@ -8,15 +10,17 @@ import s from '../decks.module.scss'
 
 type DeletePackType = {
   setShowModal: (show: boolean) => void
-  deck?: Deck
+  deck: Deck
 }
 
 export const DeletePack: FC<DeletePackType> = ({ setShowModal, deck }) => {
   const [deletePack] = useDeleteDecksMutation()
+  const navigate = useNavigate()
 
   const onDelete = (id: string) => {
     deletePack({ id })
     setShowModal(false)
+    navigate('/')
   }
 
   return (

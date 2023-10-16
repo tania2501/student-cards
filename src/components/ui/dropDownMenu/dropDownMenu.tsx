@@ -27,7 +27,7 @@ export const DropDownMenu: FC<DropDownType> = ({ info, children, icon }) => {
       <DropdownMenu.Root open={open} onOpenChange={setOpen}>
         <DropdownMenu.Trigger asChild>
           <button className={s.IconButton} aria-label="Customize options">
-            <Typography variant="subtitle">{info?.name}</Typography>
+            {info && <Typography variant="subtitle">{info?.name}</Typography>}
             {info ? <Avatar src={info ? info.avatar : ava} /> : icon}
           </button>
         </DropdownMenu.Trigger>
