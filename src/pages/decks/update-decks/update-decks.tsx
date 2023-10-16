@@ -64,7 +64,7 @@ export const UpdateDecks: FC<EditDecksType> = ({ setShowModal, deck }) => {
 
   return (
     <form onSubmit={onChange} className={s.form}>
-      <div style={{ textAlign: 'center', marginTop: '24px' }}>
+      <div style={{ textAlign: 'center' }}>
         <ControlledInput
           resetImg={() => resetImg('cover')}
           deck={deck}
