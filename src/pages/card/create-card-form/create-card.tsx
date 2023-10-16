@@ -90,7 +90,7 @@ export const CreateCard = (props: { id: string; setShow: (show: boolean) => void
           label="Question"
         />
         {!dataType && (
-          <div style={{ textAlign: 'center', marginTop: '24px' }}>
+          <div style={{ textAlign: 'center' }}>
             <ControlledInput
               control={control}
               name="questionImg"
@@ -118,7 +118,7 @@ export const CreateCard = (props: { id: string; setShow: (show: boolean) => void
           label="Answer"
         />
         {!dataType && (
-          <div style={{ textAlign: 'center', marginTop: '24px' }}>
+          <div style={{ textAlign: 'center' }}>
             <ControlledInput
               control={control}
               name="answerImg"

@@ -165,7 +165,7 @@ export const Decks = () => {
               <Table.Cell>{new Date(deck.updated).toLocaleDateString('da-DK')}</Table.Cell>
               <Table.Cell>{deck.author.name}</Table.Cell>
               <Table.Cell className={s.svgButtons}>
-                {showMyDecks ? (
+                {deck.author.id === user?.id ? (
                   <>
                     <button>
                       <SvgPlay onClick={() => navigate(`/cards/:${deck.id}`)} />

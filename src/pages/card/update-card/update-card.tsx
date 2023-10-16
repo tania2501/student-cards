@@ -86,7 +86,7 @@ export const UpdateCard: FC<EditCardType> = ({ setShowModal, card }) => {
         placeholder="Question"
         label="Question"
       />
-      <div style={{ textAlign: 'center', marginTop: '24px' }}>
+      <div style={{ textAlign: 'center' }}>
         <ControlledInput
           resetImg={() => deleteImg('questionImg')}
           img={card.questionImg}
@@ -103,7 +103,8 @@ export const UpdateCard: FC<EditCardType> = ({ setShowModal, card }) => {
           htmlFor="create-card-question-img"
           className={s.fileButton}
         >
-          <SvgImgIcon /> Add Cover
+          <SvgImgIcon />
+          {card.questionImg ? 'Change Cover' : 'Add Cover'}
         </Button>
       </div>
       <ControlledInput
@@ -114,7 +115,7 @@ export const UpdateCard: FC<EditCardType> = ({ setShowModal, card }) => {
         placeholder="Answer"
         label="Answer"
       />
-      <div style={{ textAlign: 'center', marginTop: '24px' }}>
+      <div style={{ textAlign: 'center' }}>
         <ControlledInput
           resetImg={() => deleteImg('answerImg')}
           img={card.answerImg}
@@ -131,7 +132,7 @@ export const UpdateCard: FC<EditCardType> = ({ setShowModal, card }) => {
           htmlFor="create-card-answer-img"
           className={s.fileButton}
         >
-          <SvgImgIcon /> Add Cover
+          <SvgImgIcon /> {card.answerImg ? 'Change Cover' : 'Add Cover'}
         </Button>
       </div>
       <div className={s.modalButton}>
