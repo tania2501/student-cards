@@ -7,7 +7,7 @@ import { Modal } from '../../../components/ui/modal/modal'
 import { Deck } from '../../../services/decks/types'
 import { DeletePack } from '../../decks/delete-pack/delete-pack'
 import { UpdateDecks } from '../../decks/update-decks/update-decks'
-import s from '../card.module.scss'
+import s from '../cards.module.scss'
 
 type DropMenuType = {
   deck: Deck

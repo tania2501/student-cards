@@ -14,7 +14,7 @@ export const LoginPage = () => {
   useEffect(() => {
     if (!me) return
 
-    navigate('/')
+    navigate('/decks')
   }, [me])
 
   return <SignIn onSubmit={login} />

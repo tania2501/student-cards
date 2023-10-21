@@ -80,7 +80,7 @@ export const Profile = () => {
           <Button variant="secondary" onClick={handleLogout}>
             <SvgOut /> Logout
           </Button>
-          <Button as={Link} to={'/'} variant="link" className={s.linkButton} fullWidth>
+          <Button as={Link} to={'/decks'} variant="link" className={s.linkButton} fullWidth>
             Back to Packs List &#8594;
           </Button>
         </div>

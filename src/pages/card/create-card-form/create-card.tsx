@@ -10,7 +10,7 @@ import { ControlledInput } from '../../../components/ui/controlled/controlled-in
 import { MainSelect } from '../../../components/ui/select'
 import { Typography } from '../../../components/ui/typography'
 import { useCreateCardMutation } from '../../../services/decks/decks.service'
-import s from '../card.module.scss'
+import s from '../cards.module.scss'
 
 export const CreateCard = (props: { id: string; setShow: (show: boolean) => void }) => {
   const MAX_FILE_SIZE = 500000

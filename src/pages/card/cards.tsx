@@ -14,7 +14,7 @@ import { useGetMeQuery } from '../../services/auth/auth.service'
 import { Card } from '../../services/card/types'
 import { useGetCardsQuery, useGetDecksByIdQuery } from '../../services/decks/decks.service'
 
-import s from './card.module.scss'
+import s from './cards.module.scss'
 import { CreateCard } from './create-card-form/create-card'
 import { DeleteCard } from './delete-card/delete-card'
 import { DropMenu } from './drop-menu/drop-menu'
@@ -50,12 +50,12 @@ export const CardPage = () => {
   const [showDeleteCardModal, setShowDeleteModal] = useState(false)
   const [showEditCard, setShowEdtCard] = useState(false)
   const [cardItem, setCardItem] = useState<Card>({} as Card)
-  const { id } = useParams<{ id: string }>()
+  const { deckId } = useParams<{ deckId: string }>()
   const { data: deck } = useGetDecksByIdQuery({
-    id: id || '',
+    id: deckId || '',
   })
   const { data: cards } = useGetCardsQuery({
-    id: id || '',
+    id: deckId || '',
     answer: search,
     itemsPerPage: 5,
     currentPage: page,
@@ -89,12 +89,7 @@ export const CardPage = () => {
           <UpdateCard card={cardItem} setShowModal={setShowEdtCard} />
         </Modal>
       )}
-      <Typography
-        as="button"
-        onClick={() => window.history.back()}
-        variant="body2"
-        className={s.linkButton}
-      >
+      <Typography as={Link} to={'/decks'} variant="body2" className={s.linkButton}>
         &#8592; Back to packs list
       </Typography>
       {deck?.cardsCount! > 0 ? (
@@ -104,7 +99,7 @@ export const CardPage = () => {
               <div className={s.header}>
                 <div className={s.myPack}>
                   <Typography variant="large" className={s.packName}>
-                    My Pack
+                    {deck?.name}
                   </Typography>
                   <DropMenu deck={deck!} />
                 </div>
