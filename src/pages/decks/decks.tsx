@@ -48,9 +48,17 @@ export const Decks = () => {
       title: '',
     },
   ]
+  const getShowValue = (): boolean => {
+    const isShow = localStorage.getItem('show')
+
+    if (isShow) {
+      return JSON.parse(isShow)
+    } else return false
+  }
+
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'asc' })
   const [search, setSearch] = useState('')
-  const [showMyDecks, setShowMyDecks] = useState(false)
+  const [showMyDecks, setShowMyDecks] = useState<boolean>(getShowValue)
   const [showCreateDeckModal, setShowCreateDeckModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -61,6 +69,7 @@ export const Decks = () => {
 
   const resetFilters = () => {
     setSearch('')
+    localStorage.setItem('show', 'false')
     setShowMyDecks(false)
     setRange([0, 100])
   }
@@ -154,7 +163,7 @@ export const Decks = () => {
                   <Typography
                     variant="body2"
                     as={Link}
-                    to={`/cards/${deck.id}`}
+                    to={`/deck/${deck.id}`}
                     className={s.cardsPackName}
                   >
                     {deck.name}
@@ -168,7 +177,7 @@ export const Decks = () => {
                 {deck.author.id === user?.id ? (
                   <>
                     <button>
-                      <SvgPlay onClick={() => navigate(`/cards/:${deck.id}`)} />
+                      <SvgPlay onClick={() => navigate(`/deck/:${deck.id}`)} />
                     </button>
                     <button>
                       <SvgEdit onClick={() => editPack(deck)} />
@@ -179,7 +188,7 @@ export const Decks = () => {
                   </>
                 ) : (
                   <button>
-                    <SvgPlay onClick={() => navigate(`/cards/${deck.id}`)} />
+                    <SvgPlay onClick={() => navigate(`/deck/${deck.id}`)} />
                   </button>
                 )}
               </Table.Cell>

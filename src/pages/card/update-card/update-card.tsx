@@ -9,7 +9,7 @@ import { Button } from '../../../components/ui/button'
 import { ControlledInput } from '../../../components/ui/controlled/controlled-input'
 import { Card } from '../../../services/card/types'
 import { useUpdateCardMutation } from '../../../services/decks/decks.service'
-import s from '../card.module.scss'
+import s from '../cards.module.scss'
 
 type EditCardType = {
   setShowModal: (show: boolean) => void

@@ -4,7 +4,7 @@ import { Button } from '../../../components/ui/button'
 import { Typography } from '../../../components/ui/typography'
 import { Card } from '../../../services/card/types'
 import { useDeleteCardMutation } from '../../../services/decks/decks.service'
-import s from '../card.module.scss'
+import s from '../cards.module.scss'
 
 type DeleteCardType = {
   setShowModal: (show: boolean) => void

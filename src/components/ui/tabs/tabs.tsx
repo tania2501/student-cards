@@ -9,14 +9,24 @@ type TabsType = Tabs.TabsProps & {
   show: boolean
   setShow: (show: boolean) => void
 }
+
 export const CardsTabs: FC<TabsType> = ({ tabsTitle, show, setShow, children, ...rest }) => {
+  const showMyDecks = () => {
+    localStorage.setItem('show', 'true')
+    setShow(true)
+  }
+  const showAllDecks = () => {
+    localStorage.setItem('show', 'false')
+    setShow(false)
+  }
+
   return (
     <Tabs.Root defaultValue={tabsTitle[1]} {...rest}>
       <Tabs.List className={s.tabList}>
         <Tabs.Trigger
           value={tabsTitle[0]}
           className={s.tabTitle}
-          onClick={() => setShow(true)}
+          onClick={showMyDecks}
           data-state={show ? 'active' : 'inactive'}
         >
           {tabsTitle[0]}
@@ -24,7 +34,7 @@ export const CardsTabs: FC<TabsType> = ({ tabsTitle, show, setShow, children, ..
         <Tabs.Trigger
           value={tabsTitle[1]}
           className={s.tabTitle}
-          onClick={() => setShow(false)}
+          onClick={showAllDecks}
           data-state={show ? 'inactive' : 'active'}
         >
           {tabsTitle[1]}

@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from './components/ui/header'
-import { CardPage } from './pages/card/card'
+import { CardPage } from './pages/card/cards'
 import { CheckEmailPage } from './pages/check-email/check-email'
 import { Decks } from './pages/decks/decks'
 import { ForgotPasswordPage } from './pages/forgot-password/forgot-password'
@@ -42,7 +42,7 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   {
-    path: '/',
+    path: '/decks',
     element: <Decks />,
   },
   {
@@ -50,14 +50,13 @@ const privateRoutes: RouteObject[] = [
     element: <Profile />,
   },
   {
-    path: '/cards/:id',
+    path: '/deck/:deckId',
     element: <CardPage />,
   },
 ]
 
 const router = createBrowserRouter([
   {
-    path: '/',
     element: <Layout />,
     children: [
       {
