@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 
@@ -10,22 +10,29 @@ export const MainSlider = forwardRef<
   ElementRef<typeof Slider.Root>,
   ComponentPropsWithoutRef<typeof Slider.Root>
 >(({ className, onValueChange, value, ...props }, ref) => {
+  const changeMinValue = (e: ChangeEvent<HTMLInputElement>) => {
+    onValueChange?.([+e.currentTarget.value, value?.[1] || 100])
+  }
+  const changeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+    onValueChange?.([value?.[0] || 0, +e.currentTarget.value])
+  }
+
   return (
     <div className={s.container}>
       <Input
         className={s.value}
         type="number"
         value={value?.[0]}
-        onChange={e => onValueChange?.([+e.currentTarget.value, value?.[1] || 100])}
+        onChange={changeMinValue}
         min={0}
         max={100}
       />
       <Slider.Root
-        value={value}
-        onValueChange={onValueChange}
-        {...props}
         ref={ref}
         className={s.SliderRoot}
+        {...props}
+        value={value}
+        onValueChange={onValueChange}
       >
         <Slider.Track className={s.SliderTrack}>
           <Slider.Range className={s.SliderRange} />
@@ -37,7 +44,7 @@ export const MainSlider = forwardRef<
         className={s.value}
         value={value?.[1]}
         type="number"
-        onChange={e => onValueChange?.([value?.[0] || 0, +e.currentTarget.value])}
+        onChange={changeMaxValue}
         min={0}
         max={100}
       />

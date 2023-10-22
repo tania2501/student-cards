@@ -70,3 +70,23 @@
 .packName {
   margin-right: 16px;
 }
+
+.friendsPack {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+.question {
+  margin-top: 45px;
+  text-align: left;
+}
+
+.shots {
+  margin-bottom: 35px;
+  color: var(--color-dark-100);
+}
+
+.rate {
+  margin: 12px 0;
+}
