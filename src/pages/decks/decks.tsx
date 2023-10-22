@@ -62,7 +62,7 @@ export const Decks = () => {
   const [showCreateDeckModal, setShowCreateDeckModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
-  const [range, setRange] = useState([0, 100])
+  const [range, setRange] = useState<number[]>([0, 100])
   const sortString = sort ? `${sort.key}-${sort.direction}` : null
   const [pageCount, setPageCount] = useState(JSON.stringify(10))
   const [page, setPage] = useState<number>(1)

@@ -56,7 +56,7 @@ export const CardPage = () => {
   })
   const { data: cards } = useGetCardsQuery({
     id: deckId || '',
-    answer: search,
+    question: search,
     itemsPerPage: 5,
     currentPage: page,
   })
@@ -108,7 +108,7 @@ export const CardPage = () => {
                 </Button>
               </div>
             ) : (
-              <div className={s.packName}>
+              <div className={s.friendsPack}>
                 <Typography variant="large">Friends pack</Typography>
                 <Button variant="primary">Learn to Pack</Button>
               </div>
