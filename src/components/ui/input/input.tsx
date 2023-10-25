@@ -73,13 +73,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...restProps}
           />
           {isShowPassword && (
-            <button className={classNames.visible}>
+            <div className={classNames.visible}>
               {visible ? (
-                <SvgVisible onClick={() => setVisible(true)} />
+                <SvgVisible onClick={() => setVisible(false)} />
               ) : (
-                <SvgUnvisible onClick={() => setVisible(false)} />
+                <SvgUnvisible onClick={() => setVisible(true)} />
               )}
-            </button>
+            </div>
           )}
         </div>
         {errorMessage && (

@@ -113,6 +113,7 @@ export const CardPage = () => {
                 <Button variant="primary">Learn to Pack</Button>
               </div>
             )}
+            {deck?.cover && <img src={deck.cover} className={s.deckCover} />}
           </div>
           <Input
             type="search"
