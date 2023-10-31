@@ -9,12 +9,14 @@ import { Modal } from '../../components/ui/modal/modal'
 import { Pagination } from '../../components/ui/pagination'
 import { MainSelect } from '../../components/ui/select'
 import { MainSlider } from '../../components/ui/slider'
-import { Column, Sort, Table } from '../../components/ui/table'
+import { Column, Table } from '../../components/ui/table'
 import { CardsTabs } from '../../components/ui/tabs'
 import { Typography } from '../../components/ui/typography'
 import { useGetMeQuery } from '../../services/auth/auth.service'
+import { deckSlice } from '../../services/decks/deck.slice'
 import { useCreateDecksMutation, useGetDecksQuery } from '../../services/decks/decks.service'
 import { Deck } from '../../services/decks/types'
+import { useAppDispatch, useAppSelector } from '../../services/store'
 
 import { DecksForm } from './create-decks-form/create-decks-form'
 import s from './decks.module.scss'
@@ -48,42 +50,47 @@ export const Decks = () => {
       title: '',
     },
   ]
-  const getShowValue = (): boolean => {
-    const isShow = localStorage.getItem('show')
 
-    if (isShow) {
-      return JSON.parse(isShow)
-    } else return false
-  }
+  const dispatch = useAppDispatch()
 
-  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'asc' })
-  const [search, setSearch] = useState('')
-  const [showMyDecks, setShowMyDecks] = useState<boolean>(getShowValue)
+  const currentPage = useAppSelector(state => state.deckSlice.currentPage)
+  const searchByName = useAppSelector(state => state.deckSlice.searchByName)
+  const pageCount = useAppSelector(state => state.deckSlice.itemsPerPage)
+  const minCards = useAppSelector(state => state.deckSlice.minCardsCount)
+  const maxCards = useAppSelector(state => state.deckSlice.maxCardsCount)
+  const orderBy = useAppSelector(state => state.deckSlice.orderBy)
+  const authorId = useAppSelector(state => state.deckSlice.authorId)
+
+  const setAuthorId = (value: string | undefined) => dispatch(deckSlice.actions.setAuthorId(value))
+  const setPageCount = (value: string) => dispatch(deckSlice.actions.setItemsPerPage(value))
+  const setCurrentPage = (page: number) => dispatch(deckSlice.actions.setCurrentPage(page))
+  const setSearchByName = (searchName: string) =>
+    dispatch(deckSlice.actions.setSearchByName(searchName))
+  const setOrderBy = (orderBy: string | null) => dispatch(deckSlice.actions.setOrderBy(orderBy))
+
+  const [showMyDecks, setShowMyDecks] = useState<boolean>(authorId ? true : false)
   const [showCreateDeckModal, setShowCreateDeckModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
-  const [range, setRange] = useState<number[]>([0, 100])
-  const sortString = sort ? `${sort.key}-${sort.direction}` : null
-  const [pageCount, setPageCount] = useState(JSON.stringify(10))
-  const [page, setPage] = useState<number>(1)
+  const [range, setRange] = useState<number[]>([minCards, maxCards])
 
   const resetFilters = () => {
-    setSearch('')
-    localStorage.setItem('show', 'false')
+    setSearchByName('')
     setShowMyDecks(false)
+    setAuthorId(undefined)
     setRange([0, 100])
   }
 
   const { data: user } = useGetMeQuery()
   const [createDecks] = useCreateDecksMutation()
-  const { data: decks } = useGetDecksQuery({
+  const { currentData: decks } = useGetDecksQuery({
     itemsPerPage: +pageCount,
-    name: search,
-    authorId: showMyDecks ? user?.id : undefined,
+    name: searchByName,
+    authorId: authorId,
     minCardsCount: range[0],
     maxCardsCount: range[1],
-    orderBy: sortString,
-    currentPage: page,
+    orderBy: orderBy,
+    currentPage: currentPage,
   })
   const [packInfo, setPackInfo] = useState<Deck>(decks?.items[0]!)
   const navigate = useNavigate()
@@ -124,7 +131,12 @@ export const Decks = () => {
         </Button>
       </div>
       <div className={s.instruments}>
-        <Input type="search" placeholder="Input search" value={search} onValueChange={setSearch} />
+        <Input
+          type="search"
+          placeholder="Input search"
+          value={searchByName}
+          onValueChange={setSearchByName}
+        />
         <div>
           <Typography as="p" variant="body2" className={s.title}>
             Show packs cards
@@ -132,6 +144,8 @@ export const Decks = () => {
           <CardsTabs
             tabsTitle={['My cards', 'All cards ']}
             show={showMyDecks}
+            setAuthorId={setAuthorId}
+            userId={user?.id}
             setShow={setShowMyDecks}
           />
         </div>
@@ -149,7 +163,7 @@ export const Decks = () => {
       </div>
 
       <Table.Root>
-        <Table.Header columns={columns} sort={sort} onSort={setSort} />
+        <Table.Header columns={columns} setOrderBy={setOrderBy} />
         <Table.Body>
           {decks?.items.map(deck => (
             <Table.Row key={deck.id}>
@@ -198,8 +212,8 @@ export const Decks = () => {
       </Table.Root>
       <div className={s.pagination}>
         <Pagination
-          currentPage={page}
-          setCurrentPage={setPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
           contentPerPage={decks?.pagination.itemsPerPage ?? 1}
           count={decks?.pagination.totalItems ?? 1}
         />

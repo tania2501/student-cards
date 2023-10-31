@@ -1,4 +1,4 @@
-import { ComponentProps, FC } from 'react'
+import { ComponentProps, FC, useState } from 'react'
 
 import clsx from 'clsx'
 
@@ -65,23 +65,27 @@ export const Header: FC<
   Omit<
     ComponentProps<'thead'> & {
       columns: Column[]
-      sort?: Sort
-      onSort?: (sort: Sort) => void
+      setOrderBy?: (orderBy: string | null) => void
     },
     'children'
   >
-> = ({ columns, sort, onSort, ...restProps }) => {
+> = ({ columns, setOrderBy, ...restProps }) => {
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'asc' })
   const handleSort = (key: string, sortable?: boolean) => () => {
-    if (!onSort || !sortable) return
-
-    if (sort?.key !== key) return onSort({ key, direction: 'asc' })
-
-    if (sort.direction === 'desc') return onSort(null)
-
-    return onSort({
-      key,
-      direction: sort?.direction === 'asc' ? 'desc' : 'asc',
-    })
+    if (!setSort || !sortable) return
+    else if (sort?.key !== key) {
+      setSort({ key, direction: 'asc' })
+      setOrderBy?.('updated-asc')
+    } else if (sort?.direction === 'desc') {
+      setSort(null)
+      setOrderBy?.(null)
+    } else {
+      setSort({
+        key,
+        direction: sort?.direction === 'asc' ? 'desc' : 'asc',
+      })
+      setOrderBy?.('updated-' + (sort?.direction === 'asc' ? 'desc' : 'asc'))
+    }
   }
   const abc = sort?.direction === 'asc' ? <SvgArrowDown /> : <SvgArrowTop />
 

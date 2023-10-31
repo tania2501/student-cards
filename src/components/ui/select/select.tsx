@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, forwardRef, useState } from 'react'
+import { FC, forwardRef, useState } from 'react'
 
 import * as Select from '@radix-ui/react-select'
 import clsx from 'clsx'
@@ -9,7 +9,7 @@ import { Typography } from '../typography'
 import s from './select.module.scss'
 
 type SelectPropsType = {
-  onChange?: Dispatch<SetStateAction<string>>
+  onChange?: (value: string) => void
   value: string[]
   defaultValue?: string
   className?: string

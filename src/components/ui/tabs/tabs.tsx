@@ -8,16 +8,26 @@ type TabsType = Tabs.TabsProps & {
   tabsTitle: string[]
   show: boolean
   setShow: (show: boolean) => void
+  setAuthorId?: (value: string | undefined) => void
+  userId?: string
 }
 
-export const CardsTabs: FC<TabsType> = ({ tabsTitle, show, setShow, children, ...rest }) => {
+export const CardsTabs: FC<TabsType> = ({
+  tabsTitle,
+  show,
+  setShow,
+  setAuthorId,
+  userId,
+  children,
+  ...rest
+}) => {
   const showMyDecks = () => {
-    localStorage.setItem('show', 'true')
     setShow(true)
+    setAuthorId?.(userId)
   }
   const showAllDecks = () => {
-    localStorage.setItem('show', 'false')
     setShow(false)
+    setAuthorId?.(undefined)
   }
 
   return (

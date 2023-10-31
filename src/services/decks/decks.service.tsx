@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '../base-query-with-reauth'
 import { Card, CreateCardArg, GetCardsParams } from '../card/types'
+import { RootState } from '../store'
 
 import {
   Paginated,
@@ -46,6 +47,44 @@ export const decksApi = createApi({
         method: 'POST',
         body: data,
       }),
+      onQueryStarted: async (_, { getState, queryFulfilled, dispatch }) => {
+        const state = getState() as RootState
+        const {
+          searchByName,
+          currentPage,
+          itemsPerPage,
+          maxCardsCount,
+          minCardsCount,
+          orderBy,
+          authorId,
+        } = state.deckSlice
+
+        try {
+          const result = await queryFulfilled
+
+          dispatch(
+            decksApi.util.updateQueryData(
+              'getDecks',
+              {
+                currentPage,
+                name: searchByName,
+                itemsPerPage: +itemsPerPage,
+                maxCardsCount,
+                minCardsCount,
+                orderBy,
+                authorId,
+              },
+              draft => {
+                draft.items.unshift(result.data)
+              }
+            )
+          )
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.log(e)
+        }
+      },
+
       invalidatesTags: ['Decks'],
     }),
     deleteDecks: builder.mutation<Deck, { id: string }>({
@@ -55,6 +94,41 @@ export const decksApi = createApi({
         return {
           url: `decks/${id}`,
           method: 'DELETE',
+        }
+      },
+      onQueryStarted: async ({ id }, { getState, dispatch, queryFulfilled }) => {
+        const state = getState() as RootState
+        const {
+          searchByName,
+          currentPage,
+          itemsPerPage,
+          maxCardsCount,
+          minCardsCount,
+          orderBy,
+          authorId,
+        } = state.deckSlice
+        const patchResult = dispatch(
+          decksApi.util.updateQueryData(
+            'getDecks',
+            {
+              currentPage,
+              name: searchByName,
+              orderBy,
+              itemsPerPage: +itemsPerPage,
+              maxCardsCount,
+              minCardsCount,
+              authorId,
+            },
+            draft => {
+              draft.items.splice(draft.items.findIndex(deck => deck.id === id))
+            }
+          )
+        )
+
+        try {
+          await queryFulfilled
+        } catch (e) {
+          patchResult.undo()
         }
       },
       invalidatesTags: ['Decks'],
