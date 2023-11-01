@@ -70,12 +70,12 @@ export const Header: FC<
     'children'
   >
 > = ({ columns, setOrderBy, ...restProps }) => {
-  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'asc' })
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const handleSort = (key: string, sortable?: boolean) => () => {
     if (!setSort || !sortable) return
     else if (sort?.key !== key) {
       setSort({ key, direction: 'asc' })
-      setOrderBy?.('updated-asc')
+      setOrderBy?.('' + key + '-' + 'asc')
     } else if (sort?.direction === 'desc') {
       setSort(null)
       setOrderBy?.(null)
@@ -84,10 +84,10 @@ export const Header: FC<
         key,
         direction: sort?.direction === 'asc' ? 'desc' : 'asc',
       })
-      setOrderBy?.('updated-' + (sort?.direction === 'asc' ? 'desc' : 'asc'))
+      setOrderBy?.(key + '-' + (sort?.direction === 'asc' ? 'desc' : 'asc'))
     }
   }
-  const abc = sort?.direction === 'asc' ? <SvgArrowDown /> : <SvgArrowTop />
+  const abc = sort?.direction === 'asc' ? <SvgArrowTop /> : <SvgArrowDown />
 
   return (
     <Head {...restProps}>
