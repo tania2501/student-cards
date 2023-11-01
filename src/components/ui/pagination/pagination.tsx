@@ -31,6 +31,7 @@ export const Pagination = (props: PaginationType) => {
         <button
           onClick={() => props.setCurrentPage(props.currentPage - 1)}
           className={classNames.arrowLeft}
+          disabled={props.currentPage - 1 < 1}
         >
           &lsaquo;
         </button>
@@ -63,6 +64,7 @@ export const Pagination = (props: PaginationType) => {
         <button
           onClick={() => props.setCurrentPage(props.currentPage + 1)}
           className={classNames.arrowRight}
+          disabled={props.currentPage + 1 > props.count / props.contentPerPage}
         >
           &rsaquo;
         </button>

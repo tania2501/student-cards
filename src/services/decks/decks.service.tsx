@@ -120,7 +120,10 @@ export const decksApi = createApi({
               authorId,
             },
             draft => {
-              draft.items.splice(draft.items.findIndex(deck => deck.id === id))
+              draft.items.splice(
+                draft.items.findIndex(deck => deck.id === id),
+                1
+              )
             }
           )
         )
