@@ -1,12 +1,22 @@
 import { useState } from 'react'
 
-import { Link, useParams } from 'react-router-dom'
+import { DevTool } from '@hookform/devtools'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { z } from 'zod'
 
 import { Button } from '../../../components/ui/button'
 import { Card } from '../../../components/ui/card'
-import { CardsRadioGroup, Option } from '../../../components/ui/radio-group'
+import { ControlledRadioGroup } from '../../../components/ui/controlled/controlled-radio-group'
+import { Option } from '../../../components/ui/radio-group'
 import { Typography } from '../../../components/ui/typography'
-import { useGetCardsByIdQuery, useGetDecksByIdQuery } from '../../../services/decks/decks.service'
+import {
+  useGetCardsByIdQuery,
+  useGetDecksByIdQuery,
+  useLearnDeckQuery,
+  useSaveGradeOfCardMutation,
+} from '../../../services/decks/decks.service'
 import s from '../cards.module.scss'
 
 export const LearnCard = () => {
@@ -19,6 +29,13 @@ export const LearnCard = () => {
   const { data: deck } = useGetDecksByIdQuery({
     id: deckId || '',
   })
+  const [saveGrade] = useSaveGradeOfCardMutation()
+  const { data: learnDeck } = useLearnDeckQuery({
+    id: deckId || '',
+    previousCardId: cardId ?? '',
+  })
+
+  const navigate = useNavigate()
   const option: Option[] = [
     { value: '1', label: 'Did not know' },
     { value: '2', label: 'Forgot' },
@@ -26,6 +43,25 @@ export const LearnCard = () => {
     { value: '4', label: 'Confused' },
     { value: '5', label: 'Knew the answer' },
   ]
+
+  const schema = z.object({
+    radio: z.union([z.enum(['1', '2', '3', '4', '5']), z.null()]).nullable(),
+  })
+
+  const { control, handleSubmit } = useForm<{ radio: string }>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      radio: '1',
+    },
+  })
+
+  const onSubmit = handleSubmit((data: { radio: string }) => {
+    saveGrade({ cardId: cardId!, grade: +data.radio, id: deckId! })
+      .unwrap()
+      .then(() => {
+        navigate(`/cards/${learnDeck?.id}`)
+      })
+  })
 
   return (
     <>
@@ -53,20 +89,23 @@ export const LearnCard = () => {
             <Typography as="span" variant="body1">
               {card?.answer}
             </Typography>
-            <div>
-              <Typography variant="h3" className={s.rate}>
-                Rate yourself:{' '}
-              </Typography>
-              <CardsRadioGroup options={option} defaultValue={option[0].label} />
-            </div>
-            <Button
-              variant="primary"
-              onClick={() => setShowAnswer(false)}
-              style={{ marginTop: '22px' }}
-              fullWidth
-            >
-              Next question
-            </Button>
+            <form onSubmit={onSubmit}>
+              <DevTool control={control} />
+              <div>
+                <Typography variant="h3" className={s.rate}>
+                  Rate yourself:{' '}
+                </Typography>
+                <ControlledRadioGroup
+                  control={control}
+                  name="radio"
+                  options={option}
+                  defaultValue={option[0].label}
+                />
+              </div>
+              <Button type="submit" variant="primary" style={{ marginTop: '22px' }} fullWidth>
+                Next question
+              </Button>
+            </form>
           </div>
         ) : (
           <Button variant="primary" onClick={() => setShowAnswer(true)} fullWidth>

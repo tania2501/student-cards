@@ -52,3 +52,14 @@ export type PaginatedArgs<T extends Record<string, any> = {}> = {
   pageSize?: number
   orderBy?: string | null
 } & T
+
+export type LearnDeckArgs = {
+  id: string
+  previousCardId?: string
+}
+
+export type SaveGradeArgs = {
+  id: string
+  cardId: string
+  grade: number
+}

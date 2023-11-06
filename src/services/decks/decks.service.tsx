@@ -11,6 +11,8 @@ import {
   GetDecksParams,
   CreateDeckInput,
   UpdateDecks,
+  LearnDeckArgs,
+  SaveGradeArgs,
 } from './types'
 
 export const decksApi = createApi({
@@ -136,6 +138,28 @@ export const decksApi = createApi({
       },
       invalidatesTags: ['Decks'],
     }),
+    learnDeck: builder.query<Card, LearnDeckArgs>({
+      query: params => {
+        const { id, ...data } = params
+
+        return {
+          url: `decks/${id}/learn`,
+          params: data ?? undefined,
+        }
+      },
+    }),
+    saveGradeOfCard: builder.mutation<void, SaveGradeArgs>({
+      query: body => {
+        const { id, ...data } = body
+
+        return {
+          url: `decks/${id}/learn`,
+          method: 'POST',
+          body: data,
+        }
+      },
+      invalidatesTags: ['Cards'],
+    }),
     updateDecks: builder.mutation<Deck, UpdateDecks>({
       query: body => {
         const { id, data } = body
@@ -219,4 +243,6 @@ export const {
   useGetCardsByIdQuery,
   useGetCardsQuery,
   useUpdateCardMutation,
+  useLearnDeckQuery,
+  useSaveGradeOfCardMutation,
 } = decksApi
