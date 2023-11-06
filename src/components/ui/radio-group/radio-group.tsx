@@ -35,7 +35,7 @@ export const CardsRadioGroup = forwardRef<
       >
         {props.options.map(el => (
           <div className={s.value} key={el.value}>
-            <RadioGroup.Item className={s.RadioGroupItem} value={el.label} id={el.value}>
+            <RadioGroup.Item className={s.RadioGroupItem} value={el.value} id={el.value}>
               <span className={s.span}></span>
               <RadioGroup.Indicator className={s.RadioGroupIndicator} />
             </RadioGroup.Item>

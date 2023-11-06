@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import { SvgDelete, SvgEdit } from '../../assets/icons/menu-icons'
 import { Button } from '../../components/ui/button'
@@ -12,7 +12,11 @@ import { Column, Table } from '../../components/ui/table'
 import { Typography } from '../../components/ui/typography'
 import { useGetMeQuery } from '../../services/auth/auth.service'
 import { Card } from '../../services/card/types'
-import { useGetCardsQuery, useGetDecksByIdQuery } from '../../services/decks/decks.service'
+import {
+  useGetCardsQuery,
+  useGetDecksByIdQuery,
+  useLearnDeckQuery,
+} from '../../services/decks/decks.service'
 
 import s from './cards.module.scss'
 import { CreateCard } from './create-card-form/create-card'
@@ -44,6 +48,7 @@ const columns: Column[] = [
 ]
 
 export const CardPage = () => {
+  const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [page, setPage] = useState<number>(1)
   const [showCreateCard, setShowCreateCard] = useState(false)
@@ -52,6 +57,9 @@ export const CardPage = () => {
   const [cardItem, setCardItem] = useState<Card>({} as Card)
   const { deckId } = useParams<{ deckId: string }>()
   const { data: deck } = useGetDecksByIdQuery({
+    id: deckId || '',
+  })
+  const { data: learnDeck } = useLearnDeckQuery({
     id: deckId || '',
   })
   const { data: cards } = useGetCardsQuery({
@@ -110,7 +118,9 @@ export const CardPage = () => {
             ) : (
               <div className={s.friendsPack}>
                 <Typography variant="large">Friends pack</Typography>
-                <Button variant="primary">Learn to Pack</Button>
+                <Button variant="primary" onClick={() => navigate(`/cards/${learnDeck?.id}`)}>
+                  Learn to Pack
+                </Button>
               </div>
             )}
             {deck?.cover && <img src={deck.cover} className={s.deckCover} />}
@@ -127,8 +137,8 @@ export const CardPage = () => {
             <Table.Body>
               {cards?.items.map(card => (
                 <Table.Row key={card.id}>
-                  <Table.Cell>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Table.Cell className={s.questionRow}>
+                    <div className={s.questionBody}>
                       {card.questionImg ? (
                         <img
                           src={card.questionImg}
@@ -138,19 +148,16 @@ export const CardPage = () => {
                       ) : (
                         ''
                       )}
-                      <Typography
-                        variant="body2"
-                        as={Link}
-                        to={`/cards/${card.id}`}
-                        className={s.cardsQuestion}
-                      >
-                        {card.question}
+                      <Typography variant="body2" className={s.cardsQuestion}>
+                        {card.question.length > 25
+                          ? card.question.substring(0, 25) + '...'
+                          : card.question}
                       </Typography>
                     </div>
                   </Table.Cell>
                   <Table.Cell>{new Date(card.updated).toLocaleDateString('da-DK')}</Table.Cell>
                   <Table.Cell className={s.svgButtons}>
-                    <Rating value={card.rating} />
+                    <Rating value={card.grade} />
                   </Table.Cell>
                   <Table.Cell>
                     {isMyDeck && (
