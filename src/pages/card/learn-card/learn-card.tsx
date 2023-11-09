@@ -11,28 +11,28 @@ import { Card } from '../../../components/ui/card'
 import { ControlledRadioGroup } from '../../../components/ui/controlled/controlled-radio-group'
 import { Option } from '../../../components/ui/radio-group'
 import { Typography } from '../../../components/ui/typography'
+import { deckSlice } from '../../../services/decks/deck.slice'
 import {
-  useGetCardsByIdQuery,
   useGetDecksByIdQuery,
   useLearnDeckQuery,
   useSaveGradeOfCardMutation,
 } from '../../../services/decks/decks.service'
+import { useAppDispatch, useAppSelector } from '../../../services/store'
 import s from '../cards.module.scss'
 
 export const LearnCard = () => {
   const [showAnswer, setShowAnswer] = useState(false)
-  const { cardId } = useParams<{ cardId: string }>()
-  const { data: card } = useGetCardsByIdQuery({
-    id: cardId || '',
-  })
-  const deckId = card?.deckId
+  const { deckId } = useParams<{ deckId: string }>()
+  const cardId = useAppSelector(state => state.deckSlice.cardId)
+  const dispatch = useAppDispatch()
+  const setCardId = (id: string) => dispatch(deckSlice.actions.setCardId(id))
   const { data: deck } = useGetDecksByIdQuery({
     id: deckId || '',
   })
   const [saveGrade] = useSaveGradeOfCardMutation()
   const { data: learnDeck } = useLearnDeckQuery({
     id: deckId || '',
-    previousCardId: cardId ?? '',
+    previousCardId: cardId,
   })
 
   const navigate = useNavigate()
@@ -56,16 +56,17 @@ export const LearnCard = () => {
   })
 
   const onSubmit = handleSubmit((data: { radio: string }) => {
-    saveGrade({ cardId: cardId!, grade: +data.radio, id: deckId! })
+    saveGrade({ cardId: cardId, grade: +data.radio, id: deckId! })
       .unwrap()
       .then(() => {
-        navigate(`/cards/${learnDeck?.id}`)
+        setCardId(learnDeck?.id!)
+        navigate(`/cards/learn/${deckId}`)
       })
   })
 
   return (
     <>
-      <Typography as={Link} to={`/deck/${deckId}`} variant="body2" className={s.linkButton}>
+      <Typography as={Link} to={`/cards/${deckId}`} variant="body2" className={s.linkButton}>
         &#8592; Back to pack
       </Typography>
       <Card>
@@ -75,10 +76,10 @@ export const LearnCard = () => {
             Question:
           </Typography>
           <Typography as="span" variant="body1">
-            {card?.question}
+            {learnDeck?.question}
           </Typography>
           <Typography variant="caption" className={s.shots}>
-            Количество попыток ответов на вопрос: {card?.shots}
+            Количество попыток ответов на вопрос: {learnDeck?.shots}
           </Typography>
         </div>
         {showAnswer ? (
@@ -87,7 +88,7 @@ export const LearnCard = () => {
               Answer:
             </Typography>
             <Typography as="span" variant="body1">
-              {card?.answer}
+              {learnDeck?.answer}
             </Typography>
             <form onSubmit={onSubmit}>
               <DevTool control={control} />
@@ -99,7 +100,7 @@ export const LearnCard = () => {
                   control={control}
                   name="radio"
                   options={option}
-                  defaultValue={option[0].label}
+                  defaultValue={option[0].value}
                 />
               </div>
               <Button type="submit" variant="primary" style={{ marginTop: '22px' }} fullWidth>

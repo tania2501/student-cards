@@ -93,6 +93,7 @@ export const Decks = () => {
     currentPage: currentPage,
   })
   const [packInfo, setPackInfo] = useState<Deck>(decks?.items[0]!)
+
   const navigate = useNavigate()
   const deletePack = (data: Deck) => {
     setShowDeleteModal(true)
@@ -101,6 +102,10 @@ export const Decks = () => {
   const editPack = (data: Deck) => {
     setShowEditModal(true)
     setPackInfo(data)
+  }
+
+  const learnPack = (id: string) => {
+    navigate(`/cards/learn/${id}`)
   }
 
   return (
@@ -177,7 +182,7 @@ export const Decks = () => {
                   <Typography
                     variant="body2"
                     as={Link}
-                    to={`/deck/${deck.id}`}
+                    to={`/cards/${deck.id}`}
                     className={s.cardsPackName}
                   >
                     {deck.name}
@@ -191,7 +196,7 @@ export const Decks = () => {
                 {deck.author.id === user?.id ? (
                   <>
                     <button>
-                      <SvgPlay onClick={() => navigate(`/deck/:${deck.id}`)} />
+                      <SvgPlay onClick={() => learnPack(deck.id)} />
                     </button>
                     <button>
                       <SvgEdit onClick={() => editPack(deck)} />
@@ -202,7 +207,7 @@ export const Decks = () => {
                   </>
                 ) : (
                   <button>
-                    <SvgPlay onClick={() => navigate(`/deck/${deck.id}`)} />
+                    <SvgPlay onClick={() => learnPack(deck.id)} />
                   </button>
                 )}
               </Table.Cell>

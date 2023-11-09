@@ -8,6 +8,7 @@ type InitialState = {
   minCardsCount: number
   maxCardsCount: number
   authorId: string | undefined
+  cardId: string
 }
 
 export const deckSlice = createSlice({
@@ -20,6 +21,7 @@ export const deckSlice = createSlice({
     minCardsCount: 0,
     maxCardsCount: 100,
     authorId: undefined,
+    cardId: '',
   } as InitialState,
   reducers: {
     setSearchByName: (state, action: PayloadAction<string>) => {
@@ -42,6 +44,9 @@ export const deckSlice = createSlice({
     },
     setAuthorId: (state, action: PayloadAction<string | undefined>) => {
       state.authorId = action.payload
+    },
+    setCardId: (state, action: PayloadAction<string>) => {
+      state.cardId = action.payload
     },
   },
 })
