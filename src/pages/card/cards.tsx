@@ -47,7 +47,7 @@ const columns: Column[] = [
   },
 ]
 
-export const CardPage = () => {
+export const CardsPage = () => {
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [page, setPage] = useState<number>(1)
@@ -60,7 +60,7 @@ export const CardPage = () => {
     id: deckId || '',
   })
   const { data: learnDeck } = useLearnDeckQuery({
-    id: deckId || '',
+    id: deckId!,
   })
   const { data: cards } = useGetCardsQuery({
     id: deckId || '',
@@ -118,7 +118,10 @@ export const CardPage = () => {
             ) : (
               <div className={s.friendsPack}>
                 <Typography variant="large">Friends pack</Typography>
-                <Button variant="primary" onClick={() => navigate(`/cards/${learnDeck?.id}`)}>
+                <Button
+                  variant="primary"
+                  onClick={() => navigate(`/cards/learn/${learnDeck?.deckId}`)}
+                >
                   Learn to Pack
                 </Button>
               </div>

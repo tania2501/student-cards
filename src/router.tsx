@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from './components/ui/header'
-import { CardPage } from './pages/card/cards'
+import { CardsPage } from './pages/card/cards'
 import { LearnCard } from './pages/card/learn-card/learn-card'
 import { CheckEmailPage } from './pages/check-email/check-email'
 import { Decks } from './pages/decks/decks'
@@ -55,11 +55,11 @@ const privateRoutes: RouteObject[] = [
     element: <Profile />,
   },
   {
-    path: '/deck/:deckId',
-    element: <CardPage />,
+    path: '/cards/:deckId',
+    element: <CardsPage />,
   },
   {
-    path: '/cards/:cardId',
+    path: '/cards/learn/:deckId',
     element: <LearnCard />,
   },
 ]
