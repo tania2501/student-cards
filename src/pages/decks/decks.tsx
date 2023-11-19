@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -63,7 +63,7 @@ export const Decks = () => {
 
   const setAuthorId = (value: string | undefined) => dispatch(deckSlice.actions.setAuthorId(value))
   const setPageCount = (value: string) => dispatch(deckSlice.actions.setItemsPerPage(value))
-  const setCurrentPage = (page: number) => dispatch(deckSlice.actions.setCurrentPage(page))
+  const setCurrentPage = (value: number) => dispatch(deckSlice.actions.setCurrentPage(value))
   const setSearchByName = (searchName: string) =>
     dispatch(deckSlice.actions.setSearchByName(searchName))
   const setOrderBy = (orderBy: string | null) => dispatch(deckSlice.actions.setOrderBy(orderBy))
@@ -90,8 +90,13 @@ export const Decks = () => {
     minCardsCount: range[0],
     maxCardsCount: range[1],
     orderBy: orderBy,
-    currentPage: currentPage,
+    currentPage,
   })
+
+  useEffect(() => {
+    setCurrentPage(decks?.pagination.currentPage!)
+  }, [])
+
   const [packInfo, setPackInfo] = useState<Deck>(decks?.items[0]!)
 
   const navigate = useNavigate()
@@ -217,8 +222,8 @@ export const Decks = () => {
       </Table.Root>
       <div className={s.pagination}>
         <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          page={currentPage}
+          setPage={setCurrentPage}
           contentPerPage={decks?.pagination.itemsPerPage ?? 1}
           count={decks?.pagination.totalItems ?? 1}
         />

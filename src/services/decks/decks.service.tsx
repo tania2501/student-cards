@@ -19,14 +19,13 @@ export const decksApi = createApi({
   reducerPath: 'decksApi',
   tagTypes: ['Decks', 'Cards', 'Deck', 'Card'],
   baseQuery: baseQueryWithReauth,
+  refetchOnReconnect: true,
+  refetchOnFocus: true,
   endpoints: builder => ({
-    getDecks: builder.query<
-      Paginated<Deck> & { maxCardsCount: number },
-      PaginatedArgs<GetDecksParams>
-    >({
+    getDecks: builder.query<Paginated<Deck>, PaginatedArgs<GetDecksParams> | void>({
       query: params => {
         return {
-          url: 'decks',
+          url: `decks`,
           params: params ?? undefined,
         }
       },
@@ -245,4 +244,5 @@ export const {
   useUpdateCardMutation,
   useLearnDeckQuery,
   useSaveGradeOfCardMutation,
+  usePrefetch,
 } = decksApi
