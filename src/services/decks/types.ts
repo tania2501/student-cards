@@ -44,6 +44,7 @@ export type Pagination = {
 export type Paginated<T> = {
   pagination: Pagination
   items: T[]
+  maxCardsCount: number
 }
 
 export type PaginatedArgs<T extends Record<string, any> = {}> = {
