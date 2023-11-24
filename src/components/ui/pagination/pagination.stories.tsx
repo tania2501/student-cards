@@ -15,7 +15,7 @@ const meta = {
     count: {
       control: { type: 'number' },
     },
-    currentPage: {
+    page: {
       control: { type: 'number' },
     },
   },
@@ -27,7 +27,7 @@ type Story = StoryObj<typeof meta>
 const PaginationWithArgs = () => {
   const [page, setPage] = useState<number>(1)
 
-  return <Pagination contentPerPage={1} count={22} currentPage={page} setCurrentPage={setPage} />
+  return <Pagination contentPerPage={1} count={22} page={page} setPage={setPage} />
 }
 
 export const CardsPagination: Story = {
@@ -36,7 +36,7 @@ export const CardsPagination: Story = {
   args: {
     contentPerPage: 1,
     count: 20,
-    currentPage: 1,
-    setCurrentPage: page => page,
+    page: 1,
+    setPage: page => page,
   },
 }
