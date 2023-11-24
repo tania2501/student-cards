@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -56,11 +55,11 @@ export const LearnCard = () => {
   })
 
   const onSubmit = handleSubmit((data: { radio: string }) => {
-    saveGrade({ cardId: cardId, grade: +data.radio, id: deckId! })
+    saveGrade({ cardId: learnDeck?.id!, grade: +data.radio, id: deckId! })
       .unwrap()
       .then(() => {
         setCardId(learnDeck?.id!)
-        navigate(`/cards/learn/${deckId}`)
+        navigate(`/cards/learn/${learnDeck?.deckId}`)
       })
   })
 
@@ -91,7 +90,6 @@ export const LearnCard = () => {
               {learnDeck?.answer}
             </Typography>
             <form onSubmit={onSubmit}>
-              <DevTool control={control} />
               <div>
                 <Typography variant="h3" className={s.rate}>
                   Rate yourself:{' '}

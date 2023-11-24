@@ -46,7 +46,11 @@ export const ControlledInput = <TInputValues extends FieldValues>(
       {isImg && (
         <div>
           <img src={img ? img : undefined} style={{ maxWidth: '484px', maxHeight: '120px' }} />
-          {img && <span onClick={resetField}>&#215;</span>}
+          {img && (
+            <span style={{ cursor: 'pointer' }} onClick={resetField}>
+              &#215;
+            </span>
+          )}
         </div>
       )}
       <Input

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -83,7 +83,7 @@ export const Decks = () => {
 
   const { data: user } = useGetMeQuery()
   const [createDecks] = useCreateDecksMutation()
-  const { currentData: decks } = useGetDecksQuery({
+  const { data } = useGetDecksQuery({
     itemsPerPage: +pageCount,
     name: searchByName,
     authorId: authorId,
@@ -93,11 +93,7 @@ export const Decks = () => {
     currentPage,
   })
 
-  useEffect(() => {
-    setCurrentPage(decks?.pagination.currentPage!)
-  }, [])
-
-  const [packInfo, setPackInfo] = useState<Deck>(decks?.items[0]!)
+  const [packInfo, setPackInfo] = useState<Deck>(data?.items[0]!)
 
   const navigate = useNavigate()
   const deletePack = (data: Deck) => {
@@ -175,57 +171,54 @@ export const Decks = () => {
       <Table.Root>
         <Table.Header columns={columns} setOrderBy={setOrderBy} />
         <Table.Body>
-          {decks?.items.map(deck => (
-            <Table.Row key={deck.id}>
-              <Table.Cell>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {deck.cover ? (
-                    <img src={deck.cover} alt="#" style={{ width: '113px', height: '48px' }} />
+          {data &&
+            data.items.map(deck => (
+              <Table.Row key={deck.id}>
+                <Table.Cell>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {deck.cover ? <img src={deck.cover} alt="#" style={{ width: '113px' }} /> : ''}
+                    <Typography
+                      variant="body2"
+                      as={Link}
+                      to={`/cards/${deck.id}`}
+                      className={s.cardsPackName}
+                    >
+                      {deck.name}
+                    </Typography>
+                  </div>
+                </Table.Cell>
+                <Table.Cell>{deck.cardsCount}</Table.Cell>
+                <Table.Cell>{new Date(deck.updated).toLocaleDateString('da-DK')}</Table.Cell>
+                <Table.Cell>{deck.author.name}</Table.Cell>
+                <Table.Cell className={s.svgButtons}>
+                  {deck.author.id === user?.id ? (
+                    <>
+                      <button>
+                        <SvgPlay onClick={() => learnPack(deck.id)} />
+                      </button>
+                      <button>
+                        <SvgEdit onClick={() => editPack(deck)} />
+                      </button>
+                      <button>
+                        <SvgDelete onClick={() => deletePack(deck)} />
+                      </button>
+                    </>
                   ) : (
-                    ''
-                  )}
-                  <Typography
-                    variant="body2"
-                    as={Link}
-                    to={`/cards/${deck.id}`}
-                    className={s.cardsPackName}
-                  >
-                    {deck.name}
-                  </Typography>
-                </div>
-              </Table.Cell>
-              <Table.Cell>{deck.cardsCount}</Table.Cell>
-              <Table.Cell>{new Date(deck.updated).toLocaleDateString('da-DK')}</Table.Cell>
-              <Table.Cell>{deck.author.name}</Table.Cell>
-              <Table.Cell className={s.svgButtons}>
-                {deck.author.id === user?.id ? (
-                  <>
                     <button>
                       <SvgPlay onClick={() => learnPack(deck.id)} />
                     </button>
-                    <button>
-                      <SvgEdit onClick={() => editPack(deck)} />
-                    </button>
-                    <button>
-                      <SvgDelete onClick={() => deletePack(deck)} />
-                    </button>
-                  </>
-                ) : (
-                  <button>
-                    <SvgPlay onClick={() => learnPack(deck.id)} />
-                  </button>
-                )}
-              </Table.Cell>
-            </Table.Row>
-          ))}
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            ))}
         </Table.Body>
       </Table.Root>
       <div className={s.pagination}>
         <Pagination
           page={currentPage}
           setPage={setCurrentPage}
-          contentPerPage={decks?.pagination.itemsPerPage ?? 1}
-          count={decks?.pagination.totalItems ?? 1}
+          contentPerPage={data?.pagination.itemsPerPage ?? 1}
+          count={data?.pagination.totalItems ?? 1}
         />
         <div className={s.select}>
           <Typography as="span" variant="body2">
@@ -233,7 +226,7 @@ export const Decks = () => {
           </Typography>
           <MainSelect
             value={['5', '10', '15', '20']}
-            defaultValue={JSON.stringify(decks?.pagination.itemsPerPage) ?? 1}
+            defaultValue={JSON.stringify(data?.pagination.itemsPerPage) ?? 1}
             onChange={setPageCount}
             className={s.selectPagination}
           />

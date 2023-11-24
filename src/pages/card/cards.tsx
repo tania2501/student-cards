@@ -181,8 +181,8 @@ export const CardsPage = () => {
           <Pagination
             contentPerPage={cards?.pagination.itemsPerPage ?? 1}
             count={cards?.pagination.totalItems ?? 1}
-            currentPage={cards?.pagination.currentPage ?? 1}
-            setCurrentPage={setPage}
+            page={cards?.pagination.currentPage ?? 1}
+            setPage={setPage}
           />
         </>
       ) : (
