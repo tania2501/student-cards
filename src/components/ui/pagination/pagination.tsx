@@ -2,6 +2,7 @@ import clsx from 'clsx'
 
 import { PaginationType } from '../../../hooks/usePagination'
 import usePagination from '../../../hooks/usePagination/usePagination'
+import { usePrefetch } from '../../../services/decks/decks.service'
 import { Typography } from '../typography'
 
 import s from './pagination.module.scss'
@@ -13,7 +14,7 @@ export const Pagination = (props: PaginationType) => {
     page: props.page,
     setPage: props.setPage,
   })
-
+  const prefetchPage = usePrefetch('getDecks')
   const classNames = {
     arrowLeft: clsx(s.arrow, page === 1 && s.disabled),
     arrowRight: clsx(s.arrow, page === totalPages && s.disabled),
@@ -24,7 +25,7 @@ export const Pagination = (props: PaginationType) => {
   return (
     <>
       <div className={s.pagination}>
-        <button onClick={prevPage} className={classNames.arrowLeft}>
+        <button onClick={prevPage} className={classNames.arrowLeft} disabled={page === 1}>
           &lsaquo;
         </button>
         <button onClick={() => setPage(1)} className={classNames.first}>
@@ -36,6 +37,7 @@ export const Pagination = (props: PaginationType) => {
         {gaps.paginationGroup.map(el => (
           <button
             onClick={() => setPage(el)}
+            onMouseEnter={() => prefetchPage({ currentPage: el })}
             key={el}
             className={`${s.page} ${page === el && s.active}`}
           >
@@ -57,7 +59,8 @@ export const Pagination = (props: PaginationType) => {
         <button
           onClick={nextPage}
           className={classNames.arrowRight}
-          disabled={page + 1 > props.count / props.contentPerPage}
+          onMouseEnter={() => prefetchPage({ currentPage: page + 1 })}
+          disabled={page === totalPages}
         >
           &rsaquo;
         </button>

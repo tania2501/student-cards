@@ -38,7 +38,7 @@ export const DropMenu: FC<DropMenuType> = ({ deck }) => {
       )}
       <DropDownMenu icon={<SvgMenuIcon />}>
         <DropDownMenuItem>
-          <div className={s.menuIcon} onClick={() => navigate(`cards/${learnDeck?.id}`)}>
+          <div className={s.menuIcon} onClick={() => navigate(`/cards/learn/${learnDeck?.deckId}`)}>
             <SvgPlay />
             <p>Learn</p>
           </div>

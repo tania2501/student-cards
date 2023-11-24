@@ -44,7 +44,7 @@ const usePagination = (props: PaginationType) => {
     let before = false
     let after = false
 
-    if (page === 1) {
+    if (page === 1 && pageCount > 3) {
       paginationGroup = pagesInBetween.slice(0, 3)
     } else if (page === pageCount || page === pageCount - 1 || page === pageCount - 2) {
       paginationGroup = pagesInBetween.slice(-3, pageCount)
