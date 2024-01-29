@@ -218,7 +218,7 @@ export const Decks = () => {
           page={currentPage}
           setPage={setCurrentPage}
           contentPerPage={data?.pagination.itemsPerPage ?? 1}
-          count={data?.pagination.totalItems ?? 1}
+          count={data && data.pagination.totalItems > 0 ? data.pagination.totalItems : 1}
         />
         <div className={s.select}>
           <Typography as="span" variant="body2">
