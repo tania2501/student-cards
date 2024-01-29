@@ -81,7 +81,7 @@ export const authApi = createApi({
   }),
 })
 const message =
-  '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/set-new-password/##token##">here</a> to recover your password</p>'
+  '<h1>Hi, ##name##</h1><p>Click <a href="https://student-cards.vercel.app/set-new-password/##token##">here</a> to recover your password</p>'
 
 export const {
   useGetMeQuery,
