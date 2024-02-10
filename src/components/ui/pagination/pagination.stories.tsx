@@ -8,16 +8,10 @@ const meta = {
   title: 'Components/Pagination',
   component: Pagination,
   tags: ['autodocs'],
-  argTypes: {
-    contentPerPage: {
-      control: { type: 'number' },
-    },
-    count: {
-      control: { type: 'number' },
-    },
-    page: {
-      control: { type: 'number' },
-    },
+  args: {
+    contentPerPage: 1,
+    count: 22,
+    page: 1,
   },
 } satisfies Meta<typeof Pagination>
 
@@ -31,12 +25,6 @@ const PaginationWithArgs = () => {
 }
 
 export const CardsPagination: Story = {
+  args: {},
   render: () => <PaginationWithArgs />,
-
-  args: {
-    contentPerPage: 1,
-    count: 20,
-    page: 1,
-    setPage: page => page,
-  },
 }
