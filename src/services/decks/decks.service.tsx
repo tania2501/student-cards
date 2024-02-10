@@ -244,5 +244,4 @@ export const {
   useUpdateCardMutation,
   useLearnDeckQuery,
   useSaveGradeOfCardMutation,
-  usePrefetch,
 } = decksApi
