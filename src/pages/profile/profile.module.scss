@@ -1,0 +1,42 @@
+.avatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .icon {
+    position: absolute;
+    top: 67%;
+    right: 36%;
+
+    display: block;
+
+    width: 24px;
+    height: 24px;
+   
+    background-color: var(--color-dark-300);
+    border-radius: 4px;
+
+    svg {
+      margin-top: 3px;
+    }
+  }
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saveChanges {
+  margin-top: 36px;
+}
+
+.linkButton {
+  margin-top: 10px;
+  
+  font-size: 14px;
+  font-weight: normal;
+  color: var(--color-dark-100);
+  text-decoration: none;
+}

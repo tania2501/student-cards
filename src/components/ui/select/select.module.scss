@@ -1,0 +1,83 @@
+.main {
+  color: #fff;
+}
+
+.SelectTrigger {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 6px;
+
+  background: var(--color-dark-900);
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px 2px 0 0;
+
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus {
+    border:  1px solid var(--color-info-700);
+  }
+}
+
+.SelectTrigger[data-placeholder] {
+  color: var(--color-light-100);
+}
+
+.SelectIcon {
+  margin-left: 5px;
+}
+
+.value {
+  color: #fff;
+}
+
+.SelectContent {
+  all: unset;
+
+  cursor: pointer;
+  user-select: none;
+
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-100);
+
+}
+
+[data-radix-popper-content-wrapper] {
+  z-index: 9!important;
+}
+
+.SelectItem {
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  height: 36px;
+  padding: 6px 12px;
+
+  color: var(--color-light-100);
+  
+  background-color: var(--color-dark-700);
+  outline: none;
+ 
+  &:hover {
+    color: var(--color-accent-300);
+    background-color: var(--color-accent-900);
+    outline: none;
+  }
+}
+
+.SelectItem[data-highlighted] {
+  color: var(--color-accent-300);
+  background-color: var(--color-accent-900);
+  outline: none;
+}

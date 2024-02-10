@@ -1,0 +1,60 @@
+.cardsPackName {
+  text-decoration: none;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+}
+
+.pagination { 
+  display: flex;
+  justify-content: center;
+}
+
+.instruments {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 36px 0;
+}
+
+.title {
+  margin-bottom: 5px;
+}
+
+.svgButtons button {
+  cursor: pointer;
+
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+}
+
+.selectPagination {
+  margin: 0 10px;
+}
+
+.form {
+  padding: 0 24px 24px;
+}
+
+.modalButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fileButton {
+  margin: 24px 0;
+}
+
+.deletePackText {
+  margin: 18px 0;
+  line-height: var(--line-height-m);
+}
+

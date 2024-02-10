@@ -45,14 +45,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }
     const finalType = getFinalType(type, visible)
     const classNames = {
-      input: clsx(s.input, !!isTypeSearch && s.svgSearch, !!errorMessage && s.error),
+      input: clsx(className, s.input, !!isTypeSearch && s.svgSearch, !!errorMessage && s.error),
       label: clsx(s.label),
       container: clsx(s.main),
       visible: clsx(s.visible),
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange?.(e)
-      onValueChange?.(e.target.value)
+      onValueChange?.(e.currentTarget.value)
     }
 
     return (
@@ -73,9 +73,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...restProps}
           />
           {isShowPassword && (
-            <button className={classNames.visible} onClick={() => setVisible(prev => !prev)}>
-              {visible ? <SvgVisible /> : <SvgUnvisible />}
-            </button>
+            <div className={classNames.visible}>
+              {visible ? (
+                <SvgVisible onClick={() => setVisible(false)} />
+              ) : (
+                <SvgUnvisible onClick={() => setVisible(true)} />
+              )}
+            </div>
           )}
         </div>
         {errorMessage && (

@@ -24,12 +24,14 @@ option {
   font-style: inherit;
   color: inherit;
 }
- 
-a:visited {
-  color: inherit;
+
+button {
+  all: unset
 }
  
 body {
+  overflow-y: auto;
+  
   margin: 0;
   padding: 0;
  

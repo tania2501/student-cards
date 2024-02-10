@@ -1,0 +1,40 @@
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.forgot {
+  margin:29px 0 69px;
+  text-align: right;
+}
+
+.text {
+  margin: 21px 0 11px;
+}
+
+.button {
+  margin-top: 34px;
+}
+
+.Link {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent-500);
+}
+
+.title {
+  margin-bottom: 24px;
+}
+
+.instructions {
+  margin: 19px 0 50px;
+  color: var(--color-light-900);
+  text-align: left;
+  opacity: .5;
+}
+
+.email {
+  text-align: center;
+}

@@ -1,4 +1,9 @@
-button {
+.CheckboxRoot {
   all: unset;
+  display: flex;
+  margin: 24px 0 29px;
 }
 
+.label {
+  margin-left: 5px;
+}
