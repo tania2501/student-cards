@@ -73,7 +73,7 @@ export const SignUp = (props: SubmitProps) => {
           />
         </div>
         <Button variant="primary" type="submit" fullWidth className={s.button}>
-          Sing Up
+          Sign Up
         </Button>
       </form>
       <Typography variant="body2" className={s.text}>
