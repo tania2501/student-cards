@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { BrowserRouter } from 'react-router-dom'
 
+import ava from './../../../assets/logo.jpg'
 import { Header } from './header'
 
 const meta = {
@@ -15,7 +16,7 @@ type Story = StoryObj<typeof meta>
 const Auth = () => {
   return (
     <BrowserRouter>
-      <Header isAuth={true} userInfo={{ name: 'Tania' }} />
+      <Header isAuth={true} userInfo={{ name: 'Tania', avatar: ava }} />
     </BrowserRouter>
   )
 }
