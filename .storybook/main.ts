@@ -17,7 +17,15 @@ const config: StorybookConfig = {
     "options": {}
   },
   "docs": {
-    "autodocs": "tag"
-  }
+    "autodocs": false
+  },
+  typescript: {
+    reactDocgen:
+    'react-docgen-typescript',
+      reactDocgenTypescriptOptions: {
+        propFilter: (prop) =>
+        (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+      },
+  },
 };
 export default config;
